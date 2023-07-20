@@ -37,4 +37,10 @@ public class Contents {
 
     @Column(name = "contents_deleted")
     private boolean isDeleted;
+
+    @Column(name = "views")
+    private Integer views;
+
+    @Column(name = "loving")
+    private Integer loving;
 }
