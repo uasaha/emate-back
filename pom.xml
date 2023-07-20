@@ -77,11 +77,13 @@
 			<groupId>com.querydsl</groupId>
 			<artifactId>querydsl-jpa</artifactId>
 			<version>${querydsl.version}</version>
+			<classifier>jakarta</classifier>
 		</dependency>
 		<dependency>
 			<groupId>com.querydsl</groupId>
 			<artifactId>querydsl-apt</artifactId>
 			<version>${querydsl.version}</version>
+			<classifier>jakarta</classifier>
 		</dependency>
 	</dependencies>
 	<dependencyManagement>
@@ -130,7 +132,6 @@
 				<executions>
 					<execution>
 						<goals>
-							<goal>process</goal>
 						</goals>
 						<configuration>
 							<outputDirectory>target/generated-sources/java</outputDirectory>
