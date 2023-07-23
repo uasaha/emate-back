@@ -11,6 +11,7 @@ import me.emate.mateback.tag.entity.Tag;
 @NoArgsConstructor
 public class ContentsTag {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "con_tag_no")
     private Integer conTagNo;
 

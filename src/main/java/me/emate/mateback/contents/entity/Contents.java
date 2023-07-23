@@ -12,6 +12,7 @@ import me.emate.mateback.member.entity.Member;
 @NoArgsConstructor
 public class Contents {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "contents_no")
     private Integer contentsNo;
 
