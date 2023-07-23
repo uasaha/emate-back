@@ -1,6 +1,7 @@
 package me.emate.mateback.authority.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import me.emate.mateback.member.entity.Member;
@@ -9,8 +10,10 @@ import me.emate.mateback.member.entity.Member;
 @Entity
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 public class AuthorityMember {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "authmem_no")
     private Integer authMemNo;
 

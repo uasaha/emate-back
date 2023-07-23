@@ -12,6 +12,7 @@ import me.emate.mateback.member.entity.Member;
 @Getter
 public class Sympathy {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private Long sympathyNo;
 
