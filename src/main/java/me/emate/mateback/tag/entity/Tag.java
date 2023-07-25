@@ -1,6 +1,7 @@
 package me.emate.mateback.tag.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -8,6 +9,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 public class Tag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,4 +21,8 @@ public class Tag {
 
     @Column(name = "tag_deleted")
     private boolean isDeleted;
+
+    public void del() {
+        this.isDeleted = true;
+    }
 }
