@@ -6,9 +6,7 @@ import me.emate.mateback.authority.entity.Authority;
 import me.emate.mateback.authority.entity.AuthorityMember;
 import me.emate.mateback.authority.repository.AuthorityMemberRepository;
 import me.emate.mateback.authority.repository.AuthorityRepository;
-import me.emate.mateback.member.dto.LoginMemberRequestDto;
-import me.emate.mateback.member.dto.RegisterMemberRequestDto;
-import me.emate.mateback.member.dto.MemberNicknameResponseDto;
+import me.emate.mateback.member.dto.*;
 import me.emate.mateback.member.entity.Member;
 import me.emate.mateback.member.exception.MemberLoginException;
 import me.emate.mateback.member.repository.MemberRepository;
@@ -57,5 +55,15 @@ public class MemberServiceImpl implements MemberService {
         }
 
         throw new MemberLoginException();
+    }
+
+    @Override
+    public boolean isIdConflict(CheckIDRequestDto requestDto) {
+        return memberRepository.idConflictCheck(requestDto.getId());
+    }
+
+    @Override
+    public boolean isNickConflict(CheckNicknameRequestDto requestDto) {
+        return memberRepository.isNickConflict(requestDto.getNickname());
     }
 }

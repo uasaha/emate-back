@@ -3,9 +3,7 @@ package me.emate.mateback.member.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import me.emate.mateback.member.dto.LoginMemberRequestDto;
-import me.emate.mateback.member.dto.MemberNicknameResponseDto;
-import me.emate.mateback.member.dto.RegisterMemberRequestDto;
+import me.emate.mateback.member.dto.*;
 import me.emate.mateback.member.service.MemberService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,5 +34,19 @@ public class MemberController {
 
         return ResponseEntity.ok()
                 .body(responseDto);
+    }
+
+    @PostMapping("/signup/idcheck")
+    public ResponseEntity<Boolean> idConflictCheck(
+            @RequestBody CheckIDRequestDto requestDto) {
+        return ResponseEntity.ok()
+                .body(memberService.isIdConflict(requestDto));
+    }
+
+    @PostMapping("/signup/nickcheck")
+    public ResponseEntity<Boolean> nickConflictCheck(
+            @RequestBody CheckNicknameRequestDto requestDto) {
+        return ResponseEntity.ok()
+                .body(memberService.isNickConflict(requestDto));
     }
 }
