@@ -36,4 +36,15 @@ public class MemberRepositoryImpl extends QuerydslRepositorySupport implements M
 
         return count != 0;
     }
+
+    @Override
+    public boolean isEmailConflict(String email) {
+        long count = from(member)
+                .select(Projections.constructor(
+                        String.class,
+                        member.email))
+                .where(member.email.eq(email)).fetchCount();
+
+        return count != 0;
+    }
 }

@@ -49,4 +49,12 @@ public class MemberController {
         return ResponseEntity.ok()
                 .body(memberService.isNickConflict(requestDto));
     }
+
+    @PostMapping("/signup/emailcheck")
+    public ResponseEntity<Boolean> emailConflictCheck(
+            @RequestBody CheckEmailRequestDto requestDto) {
+        return ResponseEntity.ok()
+                .body(memberService.isEmailConflict(requestDto));
+    }
+
 }

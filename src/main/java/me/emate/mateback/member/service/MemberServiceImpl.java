@@ -66,4 +66,9 @@ public class MemberServiceImpl implements MemberService {
     public boolean isNickConflict(CheckNicknameRequestDto requestDto) {
         return memberRepository.isNickConflict(requestDto.getNickname());
     }
+
+    @Override
+    public boolean isEmailConflict(CheckEmailRequestDto requestDto) {
+        return memberRepository.isEmailConflict(requestDto.getEmail());
+    }
 }

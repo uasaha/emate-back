@@ -10,4 +10,6 @@ public interface MemberService {
     boolean isIdConflict(CheckIDRequestDto requestDto);
 
     boolean isNickConflict(CheckNicknameRequestDto requestDto);
+
+    boolean isEmailConflict(CheckEmailRequestDto requestDto);
 }
