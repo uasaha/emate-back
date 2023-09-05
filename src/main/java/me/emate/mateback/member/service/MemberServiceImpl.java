@@ -1,5 +1,6 @@
 package me.emate.mateback.member.service;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.emate.mateback.authority.entity.Authority;
@@ -23,24 +24,6 @@ public class MemberServiceImpl implements MemberService {
     private final MemberRepository memberRepository;
     private final AuthorityRepository authorityRepository;
     private final AuthorityMemberRepository authorityMemberRepository;
-    @Override
-    @Transactional
-    public MemberNicknameResponseDto memberRegister(RegisterMemberRequestDto requestDto) {
-        Member member = Member.builder()
-                .id(requestDto.getId())
-                .pwd(requestDto.getPwd())
-                .email(requestDto.getEmail())
-                .intro(requestDto.getIntro())
-                .nickname(requestDto.getNickname())
-                .build();
-
-        member = memberRepository.save(member);
-        Authority authority = authorityRepository.findAuthorityByAuthorityName("MEMBER");
-        AuthorityMember authorityMember = new AuthorityMember(null, authority, member);
-        authorityMemberRepository.save(authorityMember);
-
-        return new MemberNicknameResponseDto(member.getNickname());
-    }
 
     @Override
     public MemberNicknameResponseDto memberLogin(LoginMemberRequestDto requestDto) {
@@ -59,16 +42,40 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public boolean isIdConflict(CheckIDRequestDto requestDto) {
-        return memberRepository.idConflictCheck(requestDto.getId());
+        return memberRepository.existsMemberByMemberId(requestDto.getId());
     }
 
     @Override
     public boolean isNickConflict(CheckNicknameRequestDto requestDto) {
-        return memberRepository.isNickConflict(requestDto.getNickname());
+        return memberRepository.existsMemberByNickname(requestDto.getNickname());
     }
 
     @Override
     public boolean isEmailConflict(CheckEmailRequestDto requestDto) {
-        return memberRepository.isEmailConflict(requestDto.getEmail());
+        return memberRepository.existsMemberByEmail(requestDto.getEmail());
+    }
+
+    @Override
+    @Transactional
+    public void signup(@Valid RegisterMemberRequestDto requestDto) {
+        Member member = Member.builder()
+                .id(requestDto.getMemberId())
+                .pwd(requestDto.getPwd())
+                .email(requestDto.getEmail())
+                .intro(requestDto.getIntro())
+                .nickname(requestDto.getNickname())
+                .build();
+
+        member = memberRepository.save(member);
+        Authority authority = authorityRepository.findAuthorityByAuthorityName("MEMBER");
+        AuthorityMember authorityMember = new AuthorityMember(null, authority, member);
+        authorityMemberRepository.save(authorityMember);
+    }
+
+    @Override
+    public MemberDetailResponseDto getMemberDetails(Integer memberNo) {
+
+        return memberRepository.getMemberDetails(memberNo)
+                .orElseThrow(MemberNotFoundException::new);
     }
 }

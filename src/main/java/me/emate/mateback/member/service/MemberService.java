@@ -3,7 +3,6 @@ package me.emate.mateback.member.service;
 import me.emate.mateback.member.dto.*;
 
 public interface MemberService {
-    MemberNicknameResponseDto memberRegister(RegisterMemberRequestDto requestDto);
 
     MemberNicknameResponseDto memberLogin(LoginMemberRequestDto requestDto);
 
@@ -12,4 +11,8 @@ public interface MemberService {
     boolean isNickConflict(CheckNicknameRequestDto requestDto);
 
     boolean isEmailConflict(CheckEmailRequestDto requestDto);
+
+    void signup(RegisterMemberRequestDto requestDto);
+
+    MemberDetailResponseDto getMemberDetails(Integer memberNo);
 }

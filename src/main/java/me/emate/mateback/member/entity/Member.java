@@ -4,6 +4,10 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import me.emate.mateback.authority.entity.AuthorityMember;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Table(name = "member")
 @Entity
@@ -35,6 +39,9 @@ public class Member {
 
     @Column(name = "intro")
     private String intro;
+
+    @OneToMany(mappedBy = "member", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private Set<AuthorityMember> authorities = new HashSet<>();
 
     @Builder
     public Member(String id, String pwd, String email, String nickname, String intro) {

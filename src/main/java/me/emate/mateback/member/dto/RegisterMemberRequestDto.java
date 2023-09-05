@@ -10,7 +10,7 @@ import org.hibernate.validator.constraints.Length;
 public class RegisterMemberRequestDto {
     @NotNull
     @Length(max = 30)
-    private String id;
+    private String memberId;
     @NotNull
     @Length(min = 8)
     private String pwd;
