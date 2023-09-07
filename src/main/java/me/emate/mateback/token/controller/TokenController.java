@@ -36,7 +36,7 @@ public class TokenController {
                 .build();
     }
 
-    @GetMapping("/logout")
+    @GetMapping("/auth/logout")
     public ResponseEntity<Void> logout(HttpServletRequest request) {
         String jwt = request.getHeader(AUTH_HEADER);
         tokenService.logout(jwt);

@@ -117,8 +117,6 @@ public class TokenServiceImpl implements TokenService {
     public Claims getPayLoadValue(String accessToken) {
         Claims result = null;
 
-//        Base64.getEncoder().encodeToString(secret.getBytes())
-
         try {
             result = Jwts.parser()
                     .setSigningKey(Base64.getEncoder().encodeToString(
