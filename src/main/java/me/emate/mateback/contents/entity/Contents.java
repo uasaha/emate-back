@@ -1,10 +1,13 @@
 package me.emate.mateback.contents.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import me.emate.mateback.category.entity.Category;
 import me.emate.mateback.member.entity.Member;
+
+import java.time.LocalDateTime;
 
 @Table(name = "contents")
 @Entity
@@ -31,7 +34,7 @@ public class Contents {
     private String detail;
 
     @Column(name = "created_at")
-    private boolean createdAt;
+    private LocalDateTime createdAt;
 
     @Column(name = "contents_hidden")
     private boolean isHidden;
@@ -44,4 +47,12 @@ public class Contents {
 
     @Column(name = "loving")
     private Integer loving;
+
+    @Builder
+    public Contents(Category category, Member member, String subject, String detail) {
+        this.category = category;
+        this.member = member;
+        this.subject = subject;
+        this.detail = detail;
+    }
 }
