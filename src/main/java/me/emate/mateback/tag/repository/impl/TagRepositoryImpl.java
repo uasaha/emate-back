@@ -22,6 +22,7 @@ public class TagRepositoryImpl extends QuerydslRepositorySupport implements TagR
         return from(tag)
                 .select(Projections.constructor(
                         TagListResponseDto.class,
+                        tag.tagNo,
                         tag.tagName
                 ))
                 .where(tag.isDeleted.eq(false))

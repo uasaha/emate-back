@@ -5,4 +5,6 @@ import me.emate.mateback.contents.dto.CreateContentsRequestDto;
 
 public interface ContentsService {
     ContentsDetailResponseDto createContents(CreateContentsRequestDto requestDto);
+
+    ContentsDetailResponseDto getContentsByNo(Integer contentsNo);
 }

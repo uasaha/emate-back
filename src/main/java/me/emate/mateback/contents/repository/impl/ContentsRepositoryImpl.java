@@ -4,12 +4,11 @@ import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.JPAExpressions;
 import me.emate.mateback.category.entity.QCategory;
-import me.emate.mateback.comment.entity.QComment;
 import me.emate.mateback.contents.dto.ContentsDetailResponseDto;
 import me.emate.mateback.contents.entity.Contents;
 import me.emate.mateback.contents.entity.QContents;
-import me.emate.mateback.contents.entity.QContentsTag;
 import me.emate.mateback.contents.repository.ContentsRepositoryCustom;
+import me.emate.mateback.contentsTag.entity.QContentsTag;
 import me.emate.mateback.tag.entity.QTag;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 
@@ -23,7 +22,6 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
     QCategory category = QCategory.category;
     QTag tag = QTag.tag;
     QContentsTag contentsTag = QContentsTag.contentsTag;
-    QComment comment = QComment.comment1;
 
     public Optional<ContentsDetailResponseDto> getContentsByContentsNo(Integer contentsNo) {
         return Optional
@@ -40,7 +38,7 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
                                         JPAExpressions.select(tag.tagName)
                                                 .from(tag)
                                                 .leftJoin(contentsTag)
-                                                .on(contentsTag.tag.tagName.eq(tag.tagName))
+                                                .on(contentsTag.tag.tagNo.eq(tag.tagNo))
                                                 .where(contentsTag.contents.contentsNo.eq(contents.contentsNo)),
                                                 "tags"),
                                 contents.isDeleted,

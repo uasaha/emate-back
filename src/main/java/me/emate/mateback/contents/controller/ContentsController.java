@@ -7,15 +7,12 @@ import me.emate.mateback.contents.dto.CreateContentsRequestDto;
 import me.emate.mateback.contents.service.ContentsService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/content")
+@RequestMapping("/contents")
 public class ContentsController {
     private final ContentsService contentsService;
 
@@ -27,5 +24,11 @@ public class ContentsController {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(responseDto);
+    }
+
+    @GetMapping("/{contentsNo}")
+    public ResponseEntity<ContentsDetailResponseDto> requestContentByNo(@PathVariable Integer contentsNo) {
+        return  ResponseEntity
+                .ok(contentsService.getContentsByNo(contentsNo));
     }
 }

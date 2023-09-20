@@ -8,5 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 public class TagListResponseDto {
-    String tagName;
+    private Integer tagNo;
+    private String tagName;
 }

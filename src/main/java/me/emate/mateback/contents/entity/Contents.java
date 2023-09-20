@@ -54,5 +54,8 @@ public class Contents {
         this.member = member;
         this.subject = subject;
         this.detail = detail;
+        this.views = 0;
+        this.loving = 0;
+        this.createdAt = LocalDateTime.now();
     }
 }

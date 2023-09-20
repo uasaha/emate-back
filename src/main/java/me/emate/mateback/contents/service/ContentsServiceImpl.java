@@ -8,11 +8,16 @@ import me.emate.mateback.category.repository.CategoryRepository;
 import me.emate.mateback.contents.dto.ContentsDetailResponseDto;
 import me.emate.mateback.contents.dto.CreateContentsRequestDto;
 import me.emate.mateback.contents.entity.Contents;
+import me.emate.mateback.contentsTag.entity.ContentsTag;
 import me.emate.mateback.contents.exception.NotFoundContentsException;
 import me.emate.mateback.contents.repository.ContentsRepository;
+import me.emate.mateback.contentsTag.repository.ContentsTagRepository;
 import me.emate.mateback.member.entity.Member;
 import me.emate.mateback.member.exception.NotFoundMemberException;
 import me.emate.mateback.member.repository.MemberRepository;
+import me.emate.mateback.tag.entity.Tag;
+import me.emate.mateback.tag.exception.NotFoundTagException;
+import me.emate.mateback.tag.repository.TagRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,14 +29,17 @@ public class ContentsServiceImpl implements ContentsService {
     private final ContentsRepository contentsRepository;
     private final CategoryRepository categoryRepository;
     private final MemberRepository memberRepository;
+    private final TagRepository tagRepository;
+    private final ContentsTagRepository contentsTagRepository;
 
+    @Transactional
     @Override
     public ContentsDetailResponseDto createContents(CreateContentsRequestDto requestDto) {
         Category category = categoryRepository
                 .findCategoryByCategoryNo(requestDto.getCategoryNo())
                 .orElseThrow(CategoryNotFoundException::new);
 
-        Member member = memberRepository.findMemberByMemberId("rayoung7421")
+        Member member = memberRepository.findById(1)
                 .orElseThrow(NotFoundMemberException::new);
 
         Contents contents = contentsRepository.save(
@@ -42,10 +50,19 @@ public class ContentsServiceImpl implements ContentsService {
                 .detail(requestDto.getDetail())
                 .build());
 
-        ContentsDetailResponseDto responseDto =
-                contentsRepository.getContentsByContentsNo(contents.getContentsNo())
-                        .orElseThrow(NotFoundContentsException::new);
+        Tag tag = tagRepository.findByTagNo(requestDto.getTagNo())
+                .orElseThrow(NotFoundTagException::new);
 
-        return responseDto;
+        contentsTagRepository.save(
+                new ContentsTag(null, contents, tag));
+
+        return contentsRepository.getContentsByContentsNo(contents.getContentsNo())
+                .orElseThrow(NotFoundContentsException::new);
+    }
+
+    @Override
+    public ContentsDetailResponseDto getContentsByNo(Integer contentsNo) {
+        return contentsRepository.getContentsByContentsNo(contentsNo)
+                .orElseThrow(NotFoundContentsException::new);
     }
 }
