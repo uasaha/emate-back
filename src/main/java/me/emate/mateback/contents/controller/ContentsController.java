@@ -26,9 +26,14 @@ public class ContentsController {
                 .body(responseDto);
     }
 
-    @GetMapping("/{contentsNo}")
-    public ResponseEntity<ContentsDetailResponseDto> requestContentByNo(@PathVariable Integer contentsNo) {
+    @GetMapping("/{subject}")
+    public ResponseEntity<ContentsDetailResponseDto> getContentBySubject(@PathVariable String subject) {
         return  ResponseEntity
-                .ok(contentsService.getContentsByNo(contentsNo));
+                .ok(contentsService.getContentsBySubject(subject));
+    }
+
+    @GetMapping("/latest")
+    public ResponseEntity<ContentsDetailResponseDto> getLatestContent() {
+        return ResponseEntity.ok(contentsService.getLatestContent());
     }
 }

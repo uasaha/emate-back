@@ -51,4 +51,68 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
                         .where(contents.contentsNo.eq(contentsNo))
                         .fetchOne());
     }
+
+    @Override
+    public Optional<ContentsDetailResponseDto> getContentsBySubject(String subject) {
+        return Optional
+                .of(from(contents)
+                        .select(Projections.constructor(
+                                ContentsDetailResponseDto.class,
+                                contents.contentsNo,
+                                ExpressionUtils.as(
+                                        JPAExpressions.select(category.categoryName)
+                                                .from(category)
+                                                .where(contents.category.categoryNo.eq(category.categoryNo)),
+                                        "category"),
+                                ExpressionUtils.as(
+                                        JPAExpressions.select(tag.tagName)
+                                                .from(tag)
+                                                .leftJoin(contentsTag)
+                                                .on(contentsTag.tag.tagNo.eq(tag.tagNo))
+                                                .where(contentsTag.contents.contentsNo.eq(contents.contentsNo)),
+                                        "tags"),
+                                contents.isDeleted,
+                                contents.isHidden,
+                                contents.subject,
+                                contents.detail,
+                                contents.views,
+                                contents.loving,
+                                contents.createdAt))
+                        .where(contents.subject.eq(subject))
+                        .fetchOne());
+    }
+
+    @Override
+    public Optional<ContentsDetailResponseDto> getLatestContent() {
+        return Optional
+                .of(from(contents)
+                        .select(Projections.constructor(
+                                ContentsDetailResponseDto.class,
+                                contents.contentsNo,
+                                ExpressionUtils.as(
+                                        JPAExpressions.select(category.categoryName)
+                                                .from(category)
+                                                .where(contents.category.categoryNo.eq(category.categoryNo)),
+                                        "category"),
+                                ExpressionUtils.as(
+                                        JPAExpressions.select(tag.tagName)
+                                                .from(tag)
+                                                .leftJoin(contentsTag)
+                                                .on(contentsTag.tag.tagNo.eq(tag.tagNo))
+                                                .where(contentsTag.contents.contentsNo.eq(contents.contentsNo)),
+                                        "tags"),
+                                contents.isDeleted,
+                                contents.isHidden,
+                                contents.subject,
+                                contents.detail,
+                                contents.views,
+                                contents.loving,
+                                contents.createdAt))
+                        .orderBy(contents.createdAt.desc())
+                        .where(contents.isDeleted.eq(false).and(contents.isHidden.eq(false)))
+                        .limit(1L)
+                        .fetchOne());
+
+        //SELECT * FROM "TABLE NAME" ORDER BY "COLUMN NAME" DESC LIMIT 1
+    }
 }

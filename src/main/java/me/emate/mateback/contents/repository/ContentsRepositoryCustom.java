@@ -9,4 +9,7 @@ import java.util.Optional;
 public interface ContentsRepositoryCustom {
     Optional<ContentsDetailResponseDto> getContentsByContentsNo(Integer contentsNo);
 
+    Optional<ContentsDetailResponseDto> getContentsBySubject(String subject);
+
+    Optional<ContentsDetailResponseDto> getLatestContent();
 }

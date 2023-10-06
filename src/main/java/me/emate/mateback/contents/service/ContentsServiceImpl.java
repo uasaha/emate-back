@@ -65,4 +65,17 @@ public class ContentsServiceImpl implements ContentsService {
         return contentsRepository.getContentsByContentsNo(contentsNo)
                 .orElseThrow(NotFoundContentsException::new);
     }
+
+    @Override
+    public ContentsDetailResponseDto getContentsBySubject(String subject) {
+        String blankSubject = subject.replace("-", " ");
+        return contentsRepository.getContentsBySubject(blankSubject)
+                .orElseThrow(NotFoundContentsException::new);
+    }
+
+    @Override
+    public ContentsDetailResponseDto getLatestContent() {
+        return contentsRepository.getLatestContent()
+                .orElseThrow(NotFoundContentsException::new);
+    }
 }

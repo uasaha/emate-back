@@ -7,4 +7,8 @@ public interface ContentsService {
     ContentsDetailResponseDto createContents(CreateContentsRequestDto requestDto);
 
     ContentsDetailResponseDto getContentsByNo(Integer contentsNo);
+
+    ContentsDetailResponseDto getContentsBySubject(String subject);
+
+    ContentsDetailResponseDto getLatestContent();
 }
