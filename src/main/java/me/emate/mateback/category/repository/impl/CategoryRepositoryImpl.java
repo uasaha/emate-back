@@ -12,8 +12,6 @@ import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport
 
 import java.util.List;
 
-import static com.querydsl.core.types.ExpressionUtils.count;
-
 public class CategoryRepositoryImpl extends QuerydslRepositorySupport implements CategoryRepositoryCustom {
     public CategoryRepositoryImpl() {
         super(Category.class);
@@ -24,19 +22,17 @@ public class CategoryRepositoryImpl extends QuerydslRepositorySupport implements
 
     @Override
     public List<CategoryListResponseDto> findAllCategories() {
-        List<CategoryListResponseDto> list =
-                from(category)
+        return from(category)
                 .select(Projections.fields(
                         CategoryListResponseDto.class,
                         category.categoryNo,
                         category.categoryName,
                         ExpressionUtils.as(
-                                JPAExpressions.select(count(contents.contentsNo))
+                                JPAExpressions.select(contents.category.count())
                                         .from(contents)
-                                        .where(contents.contentsNo.eq(category.categoryNo)),
+                                        .where(contents.category.eq(category)),
                                 "contentsCnt")))
                         .where(category.isDeleted.eq(false))
                 .fetch();
-        return list;
     }
 }
