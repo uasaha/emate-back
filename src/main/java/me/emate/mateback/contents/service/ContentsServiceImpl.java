@@ -56,7 +56,7 @@ public class ContentsServiceImpl implements ContentsService {
         contentsTagRepository.save(
                 new ContentsTag(null, contents, tag));
 
-        return contentsRepository.getContentsByContentsNo(contents.getContentsNo())
+        return contentsRepository.getContentsBySubject(contents.getSubject())
                 .orElseThrow(NotFoundContentsException::new);
     }
 
