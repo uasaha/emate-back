@@ -6,6 +6,7 @@ import me.emate.mateback.category.entity.Category;
 import me.emate.mateback.category.exception.CategoryNotFoundException;
 import me.emate.mateback.category.repository.CategoryRepository;
 import me.emate.mateback.contents.dto.ContentsDetailResponseDto;
+import me.emate.mateback.contents.dto.ContentsListResponseDto;
 import me.emate.mateback.contents.dto.CreateContentsRequestDto;
 import me.emate.mateback.contents.entity.Contents;
 import me.emate.mateback.contentsTag.entity.ContentsTag;
@@ -20,6 +21,8 @@ import me.emate.mateback.tag.exception.NotFoundTagException;
 import me.emate.mateback.tag.repository.TagRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @Slf4j
@@ -46,6 +49,7 @@ public class ContentsServiceImpl implements ContentsService {
                 Contents.builder()
                 .category(category)
                 .member(member)
+                .thumbnail(requestDto.getThumbnail())
                 .subject(requestDto.getSubject())
                 .detail(requestDto.getDetail())
                 .build());
@@ -77,5 +81,10 @@ public class ContentsServiceImpl implements ContentsService {
     public ContentsDetailResponseDto getLatestContent() {
         return contentsRepository.getLatestContent()
                 .orElseThrow(NotFoundContentsException::new);
+    }
+
+    @Override
+    public List<ContentsListResponseDto> getLatestContents() {
+        return contentsRepository.getLatestContents();
     }
 }

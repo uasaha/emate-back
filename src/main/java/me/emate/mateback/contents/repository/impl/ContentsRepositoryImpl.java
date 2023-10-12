@@ -5,6 +5,7 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.JPAExpressions;
 import me.emate.mateback.category.entity.QCategory;
 import me.emate.mateback.contents.dto.ContentsDetailResponseDto;
+import me.emate.mateback.contents.dto.ContentsListResponseDto;
 import me.emate.mateback.contents.entity.Contents;
 import me.emate.mateback.contents.entity.QContents;
 import me.emate.mateback.contents.repository.ContentsRepositoryCustom;
@@ -12,6 +13,7 @@ import me.emate.mateback.contentsTag.entity.QContentsTag;
 import me.emate.mateback.tag.entity.QTag;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 
+import java.util.List;
 import java.util.Optional;
 
 public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements ContentsRepositoryCustom {
@@ -114,5 +116,19 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
                         .fetchOne());
 
         //SELECT * FROM "TABLE NAME" ORDER BY "COLUMN NAME" DESC LIMIT 1
+    }
+
+    @Override
+    public List<ContentsListResponseDto> getLatestContents() {
+        return from(contents)
+                .select(Projections.fields(
+                        ContentsListResponseDto.class,
+                        contents.thumbnail,
+                        contents.subject,
+                        contents.createdAt,
+                        contents.loving))
+                .orderBy(contents.createdAt.desc())
+                .where(contents.isDeleted.eq(false).and(contents.isHidden.eq(false)))
+                .limit(9L).fetch();
     }
 }

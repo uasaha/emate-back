@@ -48,8 +48,11 @@ public class Contents {
     @Column(name = "loving")
     private Integer loving;
 
+    @Column(name = "thumbnail")
+    private String thumbnail;
+
     @Builder
-    public Contents(Category category, Member member, String subject, String detail) {
+    public Contents(Category category, Member member, String subject, String detail, String thumbnail) {
         this.category = category;
         this.member = member;
         this.subject = subject;
@@ -57,5 +60,6 @@ public class Contents {
         this.views = 0;
         this.loving = 0;
         this.createdAt = LocalDateTime.now();
+        this.thumbnail = thumbnail;
     }
 }
