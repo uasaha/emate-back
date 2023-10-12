@@ -129,6 +129,6 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
                         contents.loving))
                 .orderBy(contents.createdAt.desc())
                 .where(contents.isDeleted.eq(false).and(contents.isHidden.eq(false)))
-                .limit(9L).fetch();
+                .limit(8L).fetch();
     }
 }
