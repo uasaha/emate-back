@@ -3,6 +3,10 @@ package me.emate.mateback.category.controller;
 import lombok.RequiredArgsConstructor;
 import me.emate.mateback.category.dto.CategoryListResponseDto;
 import me.emate.mateback.category.service.CategoryService;
+import me.emate.mateback.contents.dto.ContentsListResponseDto;
+import me.emate.mateback.contents.service.ContentsService;
+import me.emate.mateback.utils.PageableResponse;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -15,6 +19,7 @@ import java.util.List;
 @RequestMapping("/category")
 public class CategoryController {
     private final CategoryService categoryService;
+    private final ContentsService contentsService;
 
     @GetMapping
     public ResponseEntity<List<CategoryListResponseDto>> findAllCategories() {
@@ -31,5 +36,12 @@ public class CategoryController {
     public ResponseEntity<Void> deleteCategory(@RequestParam String name) {
         categoryService.deleteCategory(name);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("{categoryName}")
+    public ResponseEntity<PageableResponse<ContentsListResponseDto>> findContentsByCategoryAndPageable(
+            @PathVariable String categoryName, Pageable pageable) {
+        return ResponseEntity.ok()
+                .body(contentsService.getContentsByCategoryAndPageable(categoryName, pageable));
     }
 }

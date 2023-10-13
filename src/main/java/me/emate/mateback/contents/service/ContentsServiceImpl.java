@@ -19,6 +19,8 @@ import me.emate.mateback.member.repository.MemberRepository;
 import me.emate.mateback.tag.entity.Tag;
 import me.emate.mateback.tag.exception.NotFoundTagException;
 import me.emate.mateback.tag.repository.TagRepository;
+import me.emate.mateback.utils.PageableResponse;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -86,5 +88,10 @@ public class ContentsServiceImpl implements ContentsService {
     @Override
     public List<ContentsListResponseDto> getLatestContents() {
         return contentsRepository.getLatestContents();
+    }
+
+    @Override
+    public PageableResponse<ContentsListResponseDto> getContentsByCategoryAndPageable(String categoryName, Pageable pageable) {
+        return new PageableResponse<>(contentsRepository.getContentsByCategoryAndPageable(categoryName, pageable));
     }
 }

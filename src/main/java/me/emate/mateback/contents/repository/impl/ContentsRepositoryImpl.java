@@ -3,6 +3,7 @@ package me.emate.mateback.contents.repository.impl;
 import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.JPAExpressions;
+import com.querydsl.jpa.JPQLQuery;
 import me.emate.mateback.category.entity.QCategory;
 import me.emate.mateback.contents.dto.ContentsDetailResponseDto;
 import me.emate.mateback.contents.dto.ContentsListResponseDto;
@@ -11,7 +12,10 @@ import me.emate.mateback.contents.entity.QContents;
 import me.emate.mateback.contents.repository.ContentsRepositoryCustom;
 import me.emate.mateback.contentsTag.entity.QContentsTag;
 import me.emate.mateback.tag.entity.QTag;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
+import org.springframework.data.support.PageableExecutionUtils;
 
 import java.util.List;
 import java.util.Optional;
@@ -114,8 +118,6 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
                         .where(contents.isDeleted.eq(false).and(contents.isHidden.eq(false)))
                         .limit(1L)
                         .fetchOne());
-
-        //SELECT * FROM "TABLE NAME" ORDER BY "COLUMN NAME" DESC LIMIT 1
     }
 
     @Override
@@ -130,5 +132,30 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
                 .orderBy(contents.createdAt.desc())
                 .where(contents.isDeleted.eq(false).and(contents.isHidden.eq(false)))
                 .limit(8L).fetch();
+    }
+
+    @Override
+    public Page<ContentsListResponseDto> getContentsByCategoryAndPageable(String categoryName, Pageable pageable) {
+        List<ContentsListResponseDto> responses = from(contents)
+                .select(Projections.fields(
+                        ContentsListResponseDto.class,
+                        contents.thumbnail,
+                        contents.subject,
+                        contents.createdAt,
+                        contents.loving))
+                .orderBy(contents.createdAt.desc())
+                .where(contents.isDeleted.eq(false).and(contents.isHidden.eq(false)))
+                .innerJoin(category).on(category.eq(contents.category))
+                .where(contents.category.categoryName.eq(categoryName))
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize()).fetch();
+
+        JPQLQuery<Long> count = from(contents).select(contents.count())
+                .innerJoin(category).on(contents.category.eq(category))
+                .where(contents.isDeleted.eq(false).and(contents.isHidden.eq(false)))
+                .where(contents.category.categoryName.eq(categoryName));
+
+        return PageableExecutionUtils.getPage(responses, pageable, count::fetchOne);
+
     }
 }
