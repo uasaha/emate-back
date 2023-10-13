@@ -83,7 +83,8 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
                                 contents.detail,
                                 contents.views,
                                 contents.loving,
-                                contents.createdAt))
+                                contents.createdAt,
+                                contents.thumbnail))
                         .where(contents.subject.eq(subject))
                         .fetchOne());
     }

@@ -18,4 +18,5 @@ public class ContentsDetailResponseDto {
     private Integer views;
     private Integer loving;
     private LocalDateTime createdAt;
+    private String thumbnail;
 }
