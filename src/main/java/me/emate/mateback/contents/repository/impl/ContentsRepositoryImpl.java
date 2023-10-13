@@ -159,4 +159,26 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
         return PageableExecutionUtils.getPage(responses, pageable, count::fetchOne);
 
     }
+
+    @Override
+    public Page<ContentsListResponseDto> getTotalContents(Pageable pageable) {
+        List<ContentsListResponseDto> responses = from(contents)
+                .select(Projections.fields(
+                        ContentsListResponseDto.class,
+                        contents.thumbnail,
+                        contents.subject,
+                        contents.createdAt,
+                        contents.loving))
+                .orderBy(contents.createdAt.desc())
+                .where(contents.isDeleted.eq(false).and(contents.isHidden.eq(false)))
+                .innerJoin(category).on(category.eq(contents.category))
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize()).fetch();
+
+        JPQLQuery<Long> count = from(contents).select(contents.count())
+                .innerJoin(category).on(contents.category.eq(category))
+                .where(contents.isDeleted.eq(false).and(contents.isHidden.eq(false)));
+
+        return PageableExecutionUtils.getPage(responses, pageable, count::fetchOne);
+    }
 }

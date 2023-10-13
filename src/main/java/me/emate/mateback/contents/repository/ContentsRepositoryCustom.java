@@ -20,4 +20,6 @@ public interface ContentsRepositoryCustom {
     List<ContentsListResponseDto> getLatestContents();
 
     Page<ContentsListResponseDto> getContentsByCategoryAndPageable(String categoryName, Pageable pageable);
+
+    Page<ContentsListResponseDto> getTotalContents(Pageable pageable);
 }

@@ -20,4 +20,6 @@ public interface ContentsService {
     List<ContentsListResponseDto> getLatestContents();
 
     PageableResponse<ContentsListResponseDto> getContentsByCategoryAndPageable(String categoryName, Pageable pageable);
+
+    PageableResponse<ContentsListResponseDto> getTotalContents(Pageable pageable);
 }

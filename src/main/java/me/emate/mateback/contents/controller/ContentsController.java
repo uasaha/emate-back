@@ -6,6 +6,9 @@ import me.emate.mateback.contents.dto.ContentsDetailResponseDto;
 import me.emate.mateback.contents.dto.ContentsListResponseDto;
 import me.emate.mateback.contents.dto.CreateContentsRequestDto;
 import me.emate.mateback.contents.service.ContentsService;
+import me.emate.mateback.utils.PageableResponse;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -43,5 +46,11 @@ public class ContentsController {
     @GetMapping("/latests")
     public ResponseEntity<List<ContentsListResponseDto>> getLatestContents() {
         return ResponseEntity.ok(contentsService.getLatestContents());
+    }
+
+    @GetMapping("/total")
+    public ResponseEntity<PageableResponse<ContentsListResponseDto>>
+    getTotalContents(@PageableDefault(size = 8)Pageable pageable) {
+        return ResponseEntity.ok().body(contentsService.getTotalContents(pageable));
     }
 }
