@@ -30,7 +30,9 @@ public class CategoryRepositoryImpl extends QuerydslRepositorySupport implements
                         ExpressionUtils.as(
                                 JPAExpressions.select(contents.category.count())
                                         .from(contents)
-                                        .where(contents.category.eq(category).and(contents.isHidden.eq(false))),
+                                        .where(contents.category.eq(category)
+                                                .and(contents.isHidden.eq(false))
+                                                .and(contents.isDeleted.eq(false))),
                                 "contentsCnt")))
                         .where(category.isDeleted.eq(false))
                 .fetch();
