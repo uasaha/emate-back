@@ -31,7 +31,7 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
 
     public Optional<ContentsDetailResponseDto> getContentsByContentsNo(Integer contentsNo) {
         return Optional
-                .of(from(contents)
+                .ofNullable(from(contents)
                         .select(Projections.constructor(
                                 ContentsDetailResponseDto.class,
                                 contents.contentsNo,
@@ -61,7 +61,7 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
     @Override
     public Optional<ContentsDetailResponseDto> getContentsBySubject(String subject) {
         return Optional
-                .of(from(contents)
+                .ofNullable(from(contents)
                         .select(Projections.constructor(
                                 ContentsDetailResponseDto.class,
                                 contents.contentsNo,
@@ -92,7 +92,7 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
     @Override
     public Optional<ContentsDetailResponseDto> getLatestContent() {
         return Optional
-                .of(from(contents)
+                .ofNullable(from(contents)
                         .select(Projections.constructor(
                                 ContentsDetailResponseDto.class,
                                 contents.contentsNo,
