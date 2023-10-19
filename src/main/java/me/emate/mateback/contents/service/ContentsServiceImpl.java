@@ -99,4 +99,9 @@ public class ContentsServiceImpl implements ContentsService {
     public PageableResponse<ContentsListResponseDto> getTotalContents(Pageable pageable) {
         return new PageableResponse<>(contentsRepository.getTotalContents(pageable));
     }
+
+    @Override
+    public PageableResponse<ContentsListResponseDto> getContentsContainsSearch(String search, Pageable pageable) {
+        return new PageableResponse<>(contentsRepository.getContentsContainsSubject(search, pageable));
+    }
 }

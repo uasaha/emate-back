@@ -22,4 +22,6 @@ public interface ContentsRepositoryCustom {
     Page<ContentsListResponseDto> getContentsByCategoryAndPageable(String categoryName, Pageable pageable);
 
     Page<ContentsListResponseDto> getTotalContents(Pageable pageable);
+
+    Page<ContentsListResponseDto> getContentsContainsSubject(String search, Pageable pageable);
 }

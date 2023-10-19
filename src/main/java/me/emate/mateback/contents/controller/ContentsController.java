@@ -53,4 +53,10 @@ public class ContentsController {
     getTotalContents(@PageableDefault(size = 8)Pageable pageable) {
         return ResponseEntity.ok().body(contentsService.getTotalContents(pageable));
     }
+
+    @GetMapping("/search")
+    public ResponseEntity<PageableResponse<ContentsListResponseDto>>
+    getContentsContainsSearch(@RequestParam("key") String key, @PageableDefault(size = 8) Pageable pageable) {
+        return ResponseEntity.ok().body(contentsService.getContentsContainsSearch(key, pageable));
+    }
 }
