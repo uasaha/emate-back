@@ -75,6 +75,7 @@ public class ContentsServiceImpl implements ContentsService {
     @Override
     public ContentsDetailResponseDto getContentsBySubject(String subject) {
         String blankSubject = subject.replace("-", " ");
+        log.info(blankSubject);
         return contentsRepository.getContentsBySubject(blankSubject)
                 .orElseThrow(NotFoundContentsException::new);
     }
