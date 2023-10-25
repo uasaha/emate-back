@@ -14,6 +14,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class TagServiceImpl implements TagService {
     private final TagRepository tagRepository;
+    private final static String DEFAULT_COLOR = "#252525";
     @Override
     public List<TagListResponseDto> findAllTags() {
         return tagRepository.findAllTags();
@@ -21,7 +22,7 @@ public class TagServiceImpl implements TagService {
 
     @Override
     public void createTag(String name) {
-        Tag tag = new Tag(null, name, false);
+        Tag tag = new Tag(null, name, false, DEFAULT_COLOR);
         tagRepository.save(tag);
     }
 

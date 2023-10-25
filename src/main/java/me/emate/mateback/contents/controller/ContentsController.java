@@ -38,11 +38,6 @@ public class ContentsController {
                 .ok(contentsService.getContentsBySubject(subject));
     }
 
-    @GetMapping("/latest")
-    public ResponseEntity<ContentsDetailResponseDto> getLatestContent() {
-        return ResponseEntity.ok(contentsService.getLatestContent());
-    }
-
     @GetMapping("/latests")
     public ResponseEntity<List<ContentsListResponseDto>> getLatestContents() {
         return ResponseEntity.ok(contentsService.getLatestContents());

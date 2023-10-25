@@ -15,8 +15,6 @@ public interface ContentsService {
 
     ContentsDetailResponseDto getContentsBySubject(String subject);
 
-    ContentsDetailResponseDto getLatestContent();
-
     List<ContentsListResponseDto> getLatestContents();
 
     PageableResponse<ContentsListResponseDto> getContentsByCategoryAndPageable(String categoryName, Pageable pageable);

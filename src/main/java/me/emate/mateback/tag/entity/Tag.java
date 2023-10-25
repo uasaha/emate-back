@@ -22,6 +22,9 @@ public class Tag {
     @Column(name = "tag_deleted")
     private boolean isDeleted;
 
+    @Column
+    private String color;
+
     public void del() {
         this.isDeleted = true;
     }

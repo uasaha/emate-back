@@ -11,6 +11,7 @@ import me.emate.mateback.contents.entity.Contents;
 import me.emate.mateback.contents.entity.QContents;
 import me.emate.mateback.contents.repository.ContentsRepositoryCustom;
 import me.emate.mateback.contentsTag.entity.QContentsTag;
+import me.emate.mateback.tag.dto.TagListResponseDto;
 import me.emate.mateback.tag.entity.QTag;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,9 +30,8 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
     QTag tag = QTag.tag;
     QContentsTag contentsTag = QContentsTag.contentsTag;
 
-    public Optional<ContentsDetailResponseDto> getContentsByContentsNo(Integer contentsNo) {
-        return Optional
-                .ofNullable(from(contents)
+    public ContentsDetailResponseDto getContentsByContentsNo(Integer contentsNo) {
+        ContentsDetailResponseDto responseDto = from(contents)
                         .select(Projections.constructor(
                                 ContentsDetailResponseDto.class,
                                 contents.contentsNo,
@@ -55,13 +55,31 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
                                 contents.loving,
                                 contents.createdAt))
                         .where(contents.contentsNo.eq(contentsNo))
-                        .fetchOne());
+                        .fetchOne();
+
+        List<TagListResponseDto> tagList = from(tag)
+                .select(Projections.constructor(
+                        TagListResponseDto.class,
+                        tag.tagNo,
+                        tag.tagName,
+                        tag.color
+                ))
+                .leftJoin(contentsTag)
+                .on(contentsTag.tag.eq(tag))
+                .leftJoin(contents).on(contents.eq(contentsTag.contents))
+                .where(contents.contentsNo.eq(responseDto.getContentsNo()))
+                .where(contentsTag.contents.contentsNo.eq(contents.contentsNo))
+                .where(tag.isDeleted.eq(Boolean.FALSE))
+                .fetch();
+
+        responseDto.setTags(tagList);
+
+        return responseDto;
     }
 
     @Override
-    public Optional<ContentsDetailResponseDto> getContentsBySubject(String subject) {
-        return Optional
-                .ofNullable(from(contents)
+    public ContentsDetailResponseDto getContentsBySubject(String subject) {
+        ContentsDetailResponseDto responseDto = from(contents)
                         .select(Projections.constructor(
                                 ContentsDetailResponseDto.class,
                                 contents.contentsNo,
@@ -70,13 +88,6 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
                                                 .from(category)
                                                 .where(contents.category.categoryNo.eq(category.categoryNo)),
                                         "category"),
-                                ExpressionUtils.as(
-                                        JPAExpressions.select(tag.tagName)
-                                                .from(tag)
-                                                .leftJoin(contentsTag)
-                                                .on(contentsTag.tag.tagNo.eq(tag.tagNo))
-                                                .where(contentsTag.contents.contentsNo.eq(contents.contentsNo)),
-                                        "tags"),
                                 contents.isDeleted,
                                 contents.isHidden,
                                 contents.subject,
@@ -86,39 +97,27 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
                                 contents.createdAt,
                                 contents.thumbnail))
                         .where(contents.subject.eq(subject))
-                        .fetchOne());
-    }
+                        .fetchOne();
 
-    @Override
-    public Optional<ContentsDetailResponseDto> getLatestContent() {
-        return Optional
-                .ofNullable(from(contents)
-                        .select(Projections.constructor(
-                                ContentsDetailResponseDto.class,
-                                contents.contentsNo,
-                                ExpressionUtils.as(
-                                        JPAExpressions.select(category.categoryName)
-                                                .from(category)
-                                                .where(contents.category.categoryNo.eq(category.categoryNo)),
-                                        "category"),
-                                ExpressionUtils.as(
-                                        JPAExpressions.select(tag.tagName)
-                                                .from(tag)
-                                                .leftJoin(contentsTag)
-                                                .on(contentsTag.tag.tagNo.eq(tag.tagNo))
-                                                .where(contentsTag.contents.contentsNo.eq(contents.contentsNo)),
-                                        "tags"),
-                                contents.isDeleted,
-                                contents.isHidden,
-                                contents.subject,
-                                contents.detail,
-                                contents.views,
-                                contents.loving,
-                                contents.createdAt))
-                        .orderBy(contents.createdAt.desc())
-                        .where(contents.isDeleted.eq(false).and(contents.isHidden.eq(false)))
-                        .limit(1L)
-                        .fetchOne());
+        List<TagListResponseDto> tagList = from(tag)
+                .select(Projections.constructor(
+                        TagListResponseDto.class,
+                        tag.tagNo,
+                        tag.tagName,
+                        tag.color
+                ))
+                .leftJoin(contentsTag)
+                .on(contentsTag.tag.eq(tag))
+                .leftJoin(contents).on(contents.eq(contentsTag.contents))
+                .where(contents.contentsNo.eq(responseDto.getContentsNo()))
+                .where(contentsTag.contents.contentsNo.eq(contents.contentsNo))
+                .where(tag.isDeleted.eq(Boolean.FALSE))
+                .distinct()
+                .fetch();
+
+        responseDto.setTags(tagList);
+
+        return responseDto;
     }
 
     @Override
@@ -191,9 +190,9 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
                         contents.subject,
                         contents.createdAt,
                         contents.loving))
+                .where(contents.subject.contains(search))
                 .orderBy(contents.createdAt.desc())
                 .where(contents.isDeleted.eq(false).and(contents.isHidden.eq(false)))
-                .where(contents.subject.contains(search))
                 .innerJoin(category).on(category.eq(contents.category))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize()).fetch();

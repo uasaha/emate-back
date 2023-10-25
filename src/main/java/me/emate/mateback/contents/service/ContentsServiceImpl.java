@@ -62,28 +62,18 @@ public class ContentsServiceImpl implements ContentsService {
         contentsTagRepository.save(
                 new ContentsTag(null, contents, tag));
 
-        return contentsRepository.getContentsBySubject(contents.getSubject())
-                .orElseThrow(NotFoundContentsException::new);
+        return contentsRepository.getContentsBySubject(contents.getSubject());
     }
 
     @Override
     public ContentsDetailResponseDto getContentsByNo(Integer contentsNo) {
-        return contentsRepository.getContentsByContentsNo(contentsNo)
-                .orElseThrow(NotFoundContentsException::new);
+        return contentsRepository.getContentsByContentsNo(contentsNo);
     }
 
     @Override
     public ContentsDetailResponseDto getContentsBySubject(String subject) {
         String blankSubject = subject.replace("-", " ");
-        log.info(blankSubject);
-        return contentsRepository.getContentsBySubject(blankSubject)
-                .orElseThrow(NotFoundContentsException::new);
-    }
-
-    @Override
-    public ContentsDetailResponseDto getLatestContent() {
-        return contentsRepository.getLatestContent()
-                .orElseThrow(NotFoundContentsException::new);
+        return contentsRepository.getContentsBySubject(blankSubject);
     }
 
     @Override

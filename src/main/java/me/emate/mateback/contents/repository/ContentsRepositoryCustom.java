@@ -11,11 +11,9 @@ import java.util.List;
 
 @NoRepositoryBean
 public interface ContentsRepositoryCustom {
-    Optional<ContentsDetailResponseDto> getContentsByContentsNo(Integer contentsNo);
+    ContentsDetailResponseDto getContentsByContentsNo(Integer contentsNo);
 
-    Optional<ContentsDetailResponseDto> getContentsBySubject(String subject);
-
-    Optional<ContentsDetailResponseDto> getLatestContent();
+    ContentsDetailResponseDto getContentsBySubject(String subject);
 
     List<ContentsListResponseDto> getLatestContents();
 
