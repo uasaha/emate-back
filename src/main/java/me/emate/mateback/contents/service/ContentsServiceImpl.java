@@ -10,7 +10,6 @@ import me.emate.mateback.contents.dto.ContentsListResponseDto;
 import me.emate.mateback.contents.dto.CreateContentsRequestDto;
 import me.emate.mateback.contents.entity.Contents;
 import me.emate.mateback.contentsTag.entity.ContentsTag;
-import me.emate.mateback.contents.exception.NotFoundContentsException;
 import me.emate.mateback.contents.repository.ContentsRepository;
 import me.emate.mateback.contentsTag.repository.ContentsTagRepository;
 import me.emate.mateback.member.entity.Member;
