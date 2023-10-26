@@ -19,6 +19,8 @@ public interface ContentsService {
 
     PageableResponse<ContentsListResponseDto> getContentsByCategoryAndPageable(String categoryName, Pageable pageable);
 
+    PageableResponse<ContentsListResponseDto> getContentsByTagAndPageable(String tagName, Pageable pageable);
+
     PageableResponse<ContentsListResponseDto> getTotalContents(Pageable pageable);
 
     PageableResponse<ContentsListResponseDto> getContentsContainsSearch(String search, Pageable pageable);

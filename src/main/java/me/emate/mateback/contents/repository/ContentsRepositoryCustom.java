@@ -6,7 +6,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.NoRepositoryBean;
 
-import java.util.Optional;
 import java.util.List;
 
 @NoRepositoryBean
@@ -18,6 +17,8 @@ public interface ContentsRepositoryCustom {
     List<ContentsListResponseDto> getLatestContents();
 
     Page<ContentsListResponseDto> getContentsByCategoryAndPageable(String categoryName, Pageable pageable);
+
+    Page<ContentsListResponseDto> getContentsByTagAndPageable(String tagName, Pageable pageable);
 
     Page<ContentsListResponseDto> getTotalContents(Pageable pageable);
 

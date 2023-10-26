@@ -19,7 +19,6 @@ import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport
 import org.springframework.data.support.PageableExecutionUtils;
 
 import java.util.List;
-import java.util.Optional;
 
 public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements ContentsRepositoryCustom {
     public ContentsRepositoryImpl() {
@@ -156,7 +155,32 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
                 .where(contents.category.categoryName.eq(categoryName));
 
         return PageableExecutionUtils.getPage(responses, pageable, count::fetchOne);
+    }
 
+    @Override
+    public Page<ContentsListResponseDto> getContentsByTagAndPageable(String tagName, Pageable pageable) {
+        List<ContentsListResponseDto> responses = from(contents)
+                .select(Projections.fields(
+                        ContentsListResponseDto.class,
+                        contents.thumbnail,
+                        contents.subject,
+                        contents.createdAt,
+                        contents.loving))
+                .orderBy(contents.createdAt.desc())
+                .where(contents.isDeleted.eq(false).and(contents.isHidden.eq(false)))
+                .innerJoin(contentsTag).on(contentsTag.contents.eq(contents))
+                .innerJoin(tag).on(contentsTag.tag.eq(tag))
+                .where(tag.tagName.eq(tagName))
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize()).fetch();
+
+        JPQLQuery<Long> count = from(contents).select(contents.count())
+                .innerJoin(contentsTag).on(contentsTag.contents.eq(contents))
+                .innerJoin(tag).on(contentsTag.tag.eq(tag))
+                .where(contents.isDeleted.eq(false).and(contents.isHidden.eq(false)))
+                .where(tag.tagName.eq(tagName));
+
+        return PageableExecutionUtils.getPage(responses, pageable, count::fetchOne);
     }
 
     @Override

@@ -86,6 +86,13 @@ public class ContentsServiceImpl implements ContentsService {
     }
 
     @Override
+    public PageableResponse<ContentsListResponseDto> getContentsByTagAndPageable(String tagName, Pageable pageable) {
+        String blankTag = tagName.replace("-", " ");
+
+        return new PageableResponse<>(contentsRepository.getContentsByTagAndPageable(blankTag, pageable));
+    }
+
+    @Override
     public PageableResponse<ContentsListResponseDto> getTotalContents(Pageable pageable) {
         return new PageableResponse<>(contentsRepository.getTotalContents(pageable));
     }

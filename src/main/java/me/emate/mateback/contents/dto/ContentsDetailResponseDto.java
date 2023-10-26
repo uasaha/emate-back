@@ -1,14 +1,15 @@
 package me.emate.mateback.contents.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import me.emate.mateback.tag.dto.TagListResponseDto;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
+@ToString
 public class ContentsDetailResponseDto {
     private Integer contentsNo;
     private String category;
