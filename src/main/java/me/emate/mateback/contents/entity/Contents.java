@@ -52,7 +52,7 @@ public class Contents {
     private String thumbnail;
 
     @Builder
-    public Contents(Category category, Member member, String subject, String detail, String thumbnail) {
+    public Contents(Category category, Member member, boolean hidden, String subject, String detail, String thumbnail) {
         this.category = category;
         this.member = member;
         this.subject = subject;
@@ -61,5 +61,6 @@ public class Contents {
         this.loving = 0;
         this.createdAt = LocalDateTime.now();
         this.thumbnail = thumbnail;
+        this.isHidden = hidden;
     }
 }

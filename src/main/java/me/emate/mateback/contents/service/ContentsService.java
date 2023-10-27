@@ -9,7 +9,7 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 public interface ContentsService {
-    ContentsDetailResponseDto createContents(CreateContentsRequestDto requestDto);
+    void createContents(CreateContentsRequestDto requestDto);
 
     ContentsDetailResponseDto getContentsByNo(Integer contentsNo);
 

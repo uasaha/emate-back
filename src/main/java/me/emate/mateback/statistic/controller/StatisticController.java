@@ -15,7 +15,6 @@ public class StatisticController {
 
     @GetMapping("/total")
     public ResponseEntity<Integer> getTotalVisitor() {
-        log.info("visitor total");
         return ResponseEntity.ok().body(statisticService.getTotalVisitor());
     }
 

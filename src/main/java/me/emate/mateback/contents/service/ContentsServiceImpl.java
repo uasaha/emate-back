@@ -38,7 +38,7 @@ public class ContentsServiceImpl implements ContentsService {
 
     @Transactional
     @Override
-    public ContentsDetailResponseDto createContents(CreateContentsRequestDto requestDto) {
+    public void createContents(CreateContentsRequestDto requestDto) {
         Category category = categoryRepository
                 .findCategoryByCategoryNo(requestDto.getCategoryNo())
                 .orElseThrow(CategoryNotFoundException::new);
@@ -49,19 +49,20 @@ public class ContentsServiceImpl implements ContentsService {
         Contents contents = contentsRepository.save(
                 Contents.builder()
                 .category(category)
+                .hidden(requestDto.getHidden())
                 .member(member)
                 .thumbnail(requestDto.getThumbnail())
                 .subject(requestDto.getSubject())
                 .detail(requestDto.getDetail())
                 .build());
 
-        Tag tag = tagRepository.findByTagNo(requestDto.getTagNo())
-                .orElseThrow(NotFoundTagException::new);
+        for (Integer tagNo : requestDto.getTagNo()) {
+            Tag tag = tagRepository.findByTagNo(tagNo)
+                    .orElseThrow(NotFoundTagException::new);
 
-        contentsTagRepository.save(
-                new ContentsTag(null, contents, tag));
-
-        return contentsRepository.getContentsBySubject(contents.getSubject());
+            contentsTagRepository.save(
+                    new ContentsTag(null, contents, tag));
+        }
     }
 
     @Override

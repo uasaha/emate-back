@@ -23,13 +23,14 @@ public class ContentsController {
     private final ContentsService contentsService;
 
     @PostMapping("/register")
-    public ResponseEntity<ContentsDetailResponseDto> createContents(
+    public ResponseEntity<Void> createContents(
             @RequestBody CreateContentsRequestDto requestDto) {
-        ContentsDetailResponseDto responseDto = contentsService.createContents(requestDto);
+        log.info(String.valueOf(requestDto.getHidden()));
+
+        contentsService.createContents(requestDto);
 
         return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(responseDto);
+                .status(HttpStatus.CREATED).build();
     }
 
     @GetMapping("/{subject}")
