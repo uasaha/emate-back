@@ -7,6 +7,11 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
+/**
+ * Statistic entity class입니다.
+ *
+ * @author 여운석
+ */
 @Table(name = "statistic")
 @Entity
 @Getter

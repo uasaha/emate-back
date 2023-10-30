@@ -8,6 +8,11 @@ import me.emate.mateback.tag.dto.TagListResponseDto;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * Contents detail response dto 입니다.
+ *
+ * @author 여운석
+ */
 @Getter
 @ToString
 public class ContentsDetailResponseDto {
@@ -24,6 +29,20 @@ public class ContentsDetailResponseDto {
     private LocalDateTime createdAt;
     private String thumbnail;
 
+    /**
+     * Instantiates a new Contents detail response dto.
+     *
+     * @param contentsNo the contents no
+     * @param category   the category
+     * @param isDeleted  the is deleted
+     * @param isHidden   the is hidden
+     * @param subject    the subject
+     * @param detail     the detail
+     * @param views      the views
+     * @param loving     the loving
+     * @param createdAt  the created at
+     * @param thumbnail  the thumbnail
+     */
     public ContentsDetailResponseDto(Integer contentsNo, String category, boolean isDeleted, boolean isHidden, String subject, String detail, Integer views, Integer loving, LocalDateTime createdAt, String thumbnail) {
         this.contentsNo = contentsNo;
         this.category = category;

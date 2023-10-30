@@ -20,15 +20,28 @@ import org.springframework.data.support.PageableExecutionUtils;
 
 import java.util.List;
 
+/**
+ * QueryDsl 사용을 위한 Contents repository의 구현체 입니다.
+ *
+ * @author 여운석
+ */
 public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements ContentsRepositoryCustom {
+    /**
+     * 생성자.
+     */
     public ContentsRepositoryImpl() {
         super(Contents.class);
     }
+
     QContents contents = QContents.contents;
     QCategory category = QCategory.category;
     QTag tag = QTag.tag;
     QContentsTag contentsTag = QContentsTag.contentsTag;
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public ContentsDetailResponseDto getContentsByContentsNo(Integer contentsNo) {
         ContentsDetailResponseDto responseDto = from(contents)
                         .select(Projections.constructor(
@@ -76,6 +89,9 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
         return responseDto;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ContentsDetailResponseDto getContentsBySubject(String subject) {
         ContentsDetailResponseDto responseDto = from(contents)
@@ -119,6 +135,9 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
         return responseDto;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<ContentsListResponseDto> getLatestContents() {
         return from(contents)
@@ -133,6 +152,9 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
                 .limit(8L).fetch();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Page<ContentsListResponseDto> getContentsByCategoryAndPageable(String categoryName, Pageable pageable) {
         List<ContentsListResponseDto> responses = from(contents)
@@ -157,6 +179,9 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
         return PageableExecutionUtils.getPage(responses, pageable, count::fetchOne);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Page<ContentsListResponseDto> getContentsByTagAndPageable(String tagName, Pageable pageable) {
         List<ContentsListResponseDto> responses = from(contents)
@@ -183,6 +208,9 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
         return PageableExecutionUtils.getPage(responses, pageable, count::fetchOne);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Page<ContentsListResponseDto> getTotalContents(Pageable pageable) {
         List<ContentsListResponseDto> responses = from(contents)
@@ -205,6 +233,9 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
         return PageableExecutionUtils.getPage(responses, pageable, count::fetchOne);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Page<ContentsListResponseDto> getContentsContainsSubject(String search, Pageable pageable) {
         List<ContentsListResponseDto> responses = from(contents)

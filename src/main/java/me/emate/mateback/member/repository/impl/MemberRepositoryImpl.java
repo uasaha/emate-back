@@ -13,6 +13,11 @@ import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Querydsl 사용을 위한 Member repository의 구현체입니다.
+ *
+ * @author 여운석
+ */
 public class MemberRepositoryImpl extends QuerydslRepositorySupport implements MemberRepositoryCustom {
     public MemberRepositoryImpl() {
         super(Member.class);
@@ -22,6 +27,9 @@ public class MemberRepositoryImpl extends QuerydslRepositorySupport implements M
     QAuthority authority = QAuthority.authority;
     QAuthorityMember authorityMember = QAuthorityMember.authorityMember;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public MemberInfoResponseDto memberLogin(String userId) {
         MemberInfoResponseDto responseDto = from(member)
@@ -45,6 +53,9 @@ public class MemberRepositoryImpl extends QuerydslRepositorySupport implements M
                 memberAuthorities);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Optional<MemberDetailResponseDto> getMemberDetails(Integer memberNo) {
         Optional<Member> content = Optional.ofNullable(

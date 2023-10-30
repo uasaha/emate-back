@@ -5,6 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+/**
+ * Category entity 입니다.
+ *
+ * @author 여운석
+ */
 @Table(name = "category")
 @Entity
 @Getter
@@ -22,6 +27,9 @@ public class Category {
     @Column(name = "category_deleted")
     private boolean isDeleted;
 
+    /**
+     * 삭제 요청시 삭제하는 메서드.
+     */
     public void del() {
         this.isDeleted = true;
     }

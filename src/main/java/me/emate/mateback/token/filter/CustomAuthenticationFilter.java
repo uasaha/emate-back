@@ -20,6 +20,11 @@ import java.util.Date;
 
 import static me.emate.mateback.token.util.TokenUtils.*;
 
+/**
+ * JWT 기반 인증을 사용하기 위한 Authentication filter의 custom 클래스 입니다.
+ *
+ * @author 여운석
+ */
 @Slf4j
 @RequiredArgsConstructor
 public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
@@ -27,7 +32,9 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
     private final ObjectMapper objectMapper;
     private final TokenService tokenService;
 
-
+    /**
+     * 토큰 기반으로 인증을 진행합니다.
+     */
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request,
                                                 HttpServletResponse response)
@@ -47,6 +54,9 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         return provider.authenticate(token);
     }
 
+    /**
+     * 인증에 성공하면 헤더에 토큰을 추가하여 보냅니다.
+     */
     @Override
     protected void successfulAuthentication(HttpServletRequest request,
                                             HttpServletResponse response,

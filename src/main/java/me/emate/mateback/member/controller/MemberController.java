@@ -12,6 +12,11 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Member controller 입니다.
+ *
+ * @author 여운석
+ */
 @Slf4j
 @RestController
 @RequiredArgsConstructor
@@ -20,10 +25,22 @@ public class MemberController {
     private final MemberService memberService;
     private final TokenService tokenService;
 
+    /**
+     * The constant AUTH_MEMBER_INFO.
+     */
     public static final String AUTH_MEMBER_INFO = "X-Authorization-Id";
+    /**
+     * The constant TOKEN_CUT_NUM.
+     */
     public static final Integer TOKEN_CUT_NUM = 7;
 
 
+    /**
+     * Signup response entity.
+     *
+     * @param requestDto the request dto
+     * @return the response entity
+     */
     @PostMapping("/signup")
     public ResponseEntity<Void> signup(@Valid @RequestBody RegisterMemberRequestDto requestDto) {
         memberService.signup(requestDto);
@@ -32,6 +49,12 @@ public class MemberController {
                 .build();
     }
 
+    /**
+     * Id conflict check response entity.
+     *
+     * @param requestDto the request dto
+     * @return the response entity
+     */
     @PostMapping("/signup/idcheck")
     public ResponseEntity<Boolean> idConflictCheck(
             @RequestBody CheckIDRequestDto requestDto) {
@@ -39,6 +62,12 @@ public class MemberController {
                 .body(memberService.isIdConflict(requestDto));
     }
 
+    /**
+     * Nick conflict check response entity.
+     *
+     * @param requestDto the request dto
+     * @return the response entity
+     */
     @PostMapping("/signup/nickcheck")
     public ResponseEntity<Boolean> nickConflictCheck(
             @RequestBody CheckNicknameRequestDto requestDto) {
@@ -46,6 +75,12 @@ public class MemberController {
                 .body(memberService.isNickConflict(requestDto));
     }
 
+    /**
+     * Email conflict check response entity.
+     *
+     * @param requestDto the request dto
+     * @return the response entity
+     */
     @PostMapping("/signup/emailcheck")
     public ResponseEntity<Boolean> emailConflictCheck(
             @RequestBody CheckEmailRequestDto requestDto) {
@@ -53,6 +88,12 @@ public class MemberController {
                 .body(memberService.isEmailConflict(requestDto));
     }
 
+    /**
+     * Gets member detail.
+     *
+     * @param request the request
+     * @return the member detail
+     */
     @GetMapping("/details")
     public ResponseEntity<MemberDetailResponseDto> getMemberDetail(HttpServletRequest request) {
         Integer memberNo = tokenService.getMemberNo(request);

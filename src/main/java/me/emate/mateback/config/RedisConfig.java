@@ -10,6 +10,11 @@ import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactor
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
+/**
+ * Redis를 사용하기 위한 Redis config 입니다.
+ *
+ * @author 여운석
+ */
 @Configuration
 @RequiredArgsConstructor
 public class RedisConfig {
@@ -22,6 +27,11 @@ public class RedisConfig {
     @Value("${emate.redis.password}")
     private String password;
 
+    /**
+     * Redis connection factory를 빈으로 등록.
+     *
+     * @return the lettuce connection factory
+     */
     @Bean
     public LettuceConnectionFactory redisConnectionFactory() {
         LettuceClientConfiguration clientConfiguration =
@@ -38,6 +48,11 @@ public class RedisConfig {
         return new LettuceConnectionFactory(standaloneConfiguration, clientConfiguration);
     }
 
+    /**
+     * Redis template을 빈으로 등록.
+     *
+     * @return redis template
+     */
     @Bean
     public RedisTemplate<?, ?> redisTemplate() {
         RedisTemplate<byte[], byte[]> redisTemplate = new RedisTemplate<>();

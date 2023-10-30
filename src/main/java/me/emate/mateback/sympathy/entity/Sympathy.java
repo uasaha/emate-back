@@ -6,6 +6,11 @@ import lombok.NoArgsConstructor;
 import me.emate.mateback.contents.entity.Contents;
 import me.emate.mateback.member.entity.Member;
 
+/**
+ * Sympathy(공감) entity입니다.
+ *
+ * @author 여운석
+ */
 @Table(name = "sympathy")
 @Entity
 @NoArgsConstructor

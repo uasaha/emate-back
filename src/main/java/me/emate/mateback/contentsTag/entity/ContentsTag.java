@@ -7,6 +7,11 @@ import lombok.NoArgsConstructor;
 import me.emate.mateback.contents.entity.Contents;
 import me.emate.mateback.tag.entity.Tag;
 
+/**
+ * Contents tag entity 입니다.
+ *
+ * @author 여운석
+ */
 @Table(name = "con_tag")
 @Entity
 @Getter

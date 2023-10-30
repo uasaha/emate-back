@@ -13,7 +13,7 @@ import me.emate.mateback.contentsTag.entity.ContentsTag;
 import me.emate.mateback.contents.repository.ContentsRepository;
 import me.emate.mateback.contentsTag.repository.ContentsTagRepository;
 import me.emate.mateback.member.entity.Member;
-import me.emate.mateback.member.exception.NotFoundMemberException;
+import me.emate.mateback.member.exception.MemberNotFoundException;
 import me.emate.mateback.member.repository.MemberRepository;
 import me.emate.mateback.tag.entity.Tag;
 import me.emate.mateback.tag.exception.NotFoundTagException;
@@ -25,6 +25,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/**
+ * Contents service의 구현체 입니다.
+ *
+ * @author 여운석
+ */
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -36,6 +41,9 @@ public class ContentsServiceImpl implements ContentsService {
     private final TagRepository tagRepository;
     private final ContentsTagRepository contentsTagRepository;
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Override
     public void createContents(CreateContentsRequestDto requestDto) {
@@ -44,7 +52,7 @@ public class ContentsServiceImpl implements ContentsService {
                 .orElseThrow(CategoryNotFoundException::new);
 
         Member member = memberRepository.findById(1)
-                .orElseThrow(NotFoundMemberException::new);
+                .orElseThrow(MemberNotFoundException::new);
 
         Contents contents = contentsRepository.save(
                 Contents.builder()
@@ -65,27 +73,42 @@ public class ContentsServiceImpl implements ContentsService {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ContentsDetailResponseDto getContentsByNo(Integer contentsNo) {
         return contentsRepository.getContentsByContentsNo(contentsNo);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ContentsDetailResponseDto getContentsBySubject(String subject) {
         String blankSubject = subject.replace("-", " ");
         return contentsRepository.getContentsBySubject(blankSubject);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<ContentsListResponseDto> getLatestContents() {
         return contentsRepository.getLatestContents();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public PageableResponse<ContentsListResponseDto> getContentsByCategoryAndPageable(String categoryName, Pageable pageable) {
         return new PageableResponse<>(contentsRepository.getContentsByCategoryAndPageable(categoryName, pageable));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public PageableResponse<ContentsListResponseDto> getContentsByTagAndPageable(String tagName, Pageable pageable) {
         String blankTag = tagName.replace("-", " ");
@@ -93,11 +116,17 @@ public class ContentsServiceImpl implements ContentsService {
         return new PageableResponse<>(contentsRepository.getContentsByTagAndPageable(blankTag, pageable));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public PageableResponse<ContentsListResponseDto> getTotalContents(Pageable pageable) {
         return new PageableResponse<>(contentsRepository.getTotalContents(pageable));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public PageableResponse<ContentsListResponseDto> getContentsContainsSearch(String search, Pageable pageable) {
         return new PageableResponse<>(contentsRepository.getContentsContainsSubject(search, pageable));

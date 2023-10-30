@@ -4,6 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+/**
+ * Token info dto입니다.
+ *
+ * @author 여운석
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

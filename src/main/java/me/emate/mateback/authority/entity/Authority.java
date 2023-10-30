@@ -5,6 +5,12 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+
+/**
+ * Authority entity.
+ *
+ * @author 여운석
+ */
 @Entity
 @Table(name = "authority")
 @Getter

@@ -6,6 +6,11 @@ import me.emate.mateback.comment.repository.CommentRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * Comment service의 구현체 입니다.
+ *
+ * @author 여운석
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor

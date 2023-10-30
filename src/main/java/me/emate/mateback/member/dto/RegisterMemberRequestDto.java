@@ -5,6 +5,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
+/**
+ * member를 등록할 때 사용하는 request dto입니다.
+ *
+ * @author 여운석
+ */
 @Getter
 @NoArgsConstructor
 public class RegisterMemberRequestDto {

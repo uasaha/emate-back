@@ -10,12 +10,18 @@ import me.emate.mateback.authority.repository.AuthorityRepository;
 import me.emate.mateback.member.dto.*;
 import me.emate.mateback.member.entity.Member;
 import me.emate.mateback.member.exception.MemberLoginException;
+import me.emate.mateback.member.exception.MemberNotFoundException;
 import me.emate.mateback.member.repository.MemberRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
+/**
+ * Member service의 구현체입니다.
+ *
+ * @author 여운석
+ */
 @Slf4j
 @RequiredArgsConstructor
 @Service
@@ -25,6 +31,9 @@ public class MemberServiceImpl implements MemberService {
     private final AuthorityRepository authorityRepository;
     private final AuthorityMemberRepository authorityMemberRepository;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public MemberNicknameResponseDto memberLogin(LoginMemberRequestDto requestDto) {
         Optional<Member> member = memberRepository.findMemberByMemberId(requestDto.getId());
@@ -40,21 +49,33 @@ public class MemberServiceImpl implements MemberService {
         throw new MemberLoginException();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isIdConflict(CheckIDRequestDto requestDto) {
         return memberRepository.existsMemberByMemberId(requestDto.getId());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isNickConflict(CheckNicknameRequestDto requestDto) {
         return memberRepository.existsMemberByNickname(requestDto.getNickname());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isEmailConflict(CheckEmailRequestDto requestDto) {
         return memberRepository.existsMemberByEmail(requestDto.getEmail());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     @Transactional
     public void signup(@Valid RegisterMemberRequestDto requestDto) {
@@ -72,6 +93,9 @@ public class MemberServiceImpl implements MemberService {
         authorityMemberRepository.save(authorityMember);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public MemberDetailResponseDto getMemberDetails(Integer memberNo) {
 

@@ -6,6 +6,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import me.emate.mateback.member.entity.Member;
 
+/**
+ * Authority member entity.
+ *
+ * @author 여운석
+ */
 @Table(name = "authority_member")
 @Entity
 @Getter

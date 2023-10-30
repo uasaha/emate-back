@@ -8,6 +8,11 @@ import me.emate.mateback.member.entity.Member;
 
 import java.time.LocalDateTime;
 
+/**
+ * File entity 입니다.
+ *
+ * @author 여운석
+ */
 @Table(name = "file")
 @Entity
 @Getter

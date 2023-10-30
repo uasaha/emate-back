@@ -12,6 +12,11 @@ import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport
 
 import java.util.List;
 
+/**
+ * Querydsl 사용을 위한 Category repository의 구현체입니다.
+ *
+ * @author 여운석
+ */
 public class CategoryRepositoryImpl extends QuerydslRepositorySupport implements CategoryRepositoryCustom {
     public CategoryRepositoryImpl() {
         super(Category.class);
@@ -20,6 +25,9 @@ public class CategoryRepositoryImpl extends QuerydslRepositorySupport implements
     QCategory category = QCategory.category;
     QContents contents = QContents.contents;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<CategoryListResponseDto> findAllCategories() {
         return from(category)

@@ -34,6 +34,9 @@ public class TokenServiceImpl implements TokenService {
     private final RedisTemplate<String, String> redisTemplate;
     private final ObjectMapper objectMapper;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String tokenIssued(Integer userNo,
                               Collection<? extends GrantedAuthority> authorities) {
@@ -48,6 +51,9 @@ public class TokenServiceImpl implements TokenService {
         return accessToken;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String tokenReIssued(String accessToken) {
         if (!tokenUtils.isValidateToken(accessToken)) {
@@ -74,6 +80,9 @@ public class TokenServiceImpl implements TokenService {
         return renewAccessToken;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void logout(String jwt) {
         String accessToken = jwt.substring(TOKEN_TYPE.length());
@@ -140,6 +149,9 @@ public class TokenServiceImpl implements TokenService {
         return result;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public TokenPayload getPayLoad(String accessToken) {
         String memberUUID = getPayLoadValue(accessToken)
@@ -151,6 +163,9 @@ public class TokenServiceImpl implements TokenService {
         return new TokenPayload(memberUUID, roles);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Integer getMemberNo(HttpServletRequest request) {
         String accessToken = request.getHeader(AUTH_MEMBER_INFO).substring(TOKEN_CUT_NUM);

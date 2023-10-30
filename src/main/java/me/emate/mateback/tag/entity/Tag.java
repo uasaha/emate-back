@@ -5,6 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+/**
+ * Tag entity 입니다.
+ *
+ * @author 여운석
+ */
 @Table(name = "tag")
 @Entity
 @Getter
@@ -25,6 +30,9 @@ public class Tag {
     @Column
     private String color;
 
+    /**
+     * Del.
+     */
     public void del() {
         this.isDeleted = true;
     }

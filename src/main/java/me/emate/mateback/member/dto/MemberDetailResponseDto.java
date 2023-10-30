@@ -8,6 +8,11 @@ import me.emate.mateback.member.entity.Member;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Member 상세 정보를 조회하는 dto입니다.
+ *
+ * @author 여운석
+ */
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,6 +23,11 @@ public class MemberDetailResponseDto {
     private String intro;
     private List<String> authorities;
 
+    /**
+     * Instantiates a new Member detail response dto.
+     *
+     * @param member the member
+     */
     public MemberDetailResponseDto(Member member) {
         this.memberNo = member.getMemberNo();
         this.nickname = member.getNickname();

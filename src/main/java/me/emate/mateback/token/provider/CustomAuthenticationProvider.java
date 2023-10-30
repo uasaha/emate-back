@@ -6,6 +6,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.userdetails.User;
 
+/**
+ * JWT 기반 인증을 위한 Authentication provider의 Custom입니다.
+ *
+ * @author 여운석
+ */
 public class CustomAuthenticationProvider extends DaoAuthenticationProvider {
     @Override
     public Authentication authenticate(Authentication authentication) {

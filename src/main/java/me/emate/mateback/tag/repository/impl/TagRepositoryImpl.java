@@ -9,6 +9,9 @@ import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport
 
 import java.util.List;
 
+/**
+ * Tag repository의 구현체 입니다.
+ */
 public class TagRepositoryImpl extends QuerydslRepositorySupport implements TagRepositoryCustom {
     public TagRepositoryImpl() {
         super(Tag.class);
@@ -16,7 +19,9 @@ public class TagRepositoryImpl extends QuerydslRepositorySupport implements TagR
 
     QTag tag = QTag.tag;
 
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<TagListResponseDto> findAllTags() {
         return from(tag)

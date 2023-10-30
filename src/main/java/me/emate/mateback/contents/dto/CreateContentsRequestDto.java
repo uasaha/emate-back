@@ -7,6 +7,11 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 
+/**
+ * Create contents request dto 입니다.
+ *
+ * @author 여운석
+ */
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor

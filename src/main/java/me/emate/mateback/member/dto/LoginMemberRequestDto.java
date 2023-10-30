@@ -1,9 +1,13 @@
 package me.emate.mateback.member.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+/**
+ * member가 로그인 시 사용되는 request dto입니다.
+ *
+ * @author 여운석
+ */
 @Getter
 @NoArgsConstructor
 public class LoginMemberRequestDto {
