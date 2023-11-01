@@ -4,7 +4,7 @@ import me.emate.mateback.authority.entity.AuthorityMember;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
- * The interface Authority member repository.
+ * JPA를 사용하기 위한 Authority member repository입니다.
  *
  * @author 여운석
  */
