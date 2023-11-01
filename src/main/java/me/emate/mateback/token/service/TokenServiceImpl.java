@@ -29,7 +29,7 @@ import static me.emate.mateback.token.util.TokenUtils.TOKEN_TYPE;
 public class TokenServiceImpl implements TokenService {
     private static final String EXP_MESSAGE = "다시 로그인 하세요.";
     private static final String TOKEN_INVALID_MESSAGE = "유효하지 않은 토큰입니다.";
-    private static final String BLACK_LIST = "black_list";
+    private static final String BLACK_LIST = "black-list";
     private final TokenUtils tokenUtils;
     private final RedisTemplate<String, String> redisTemplate;
     private final ObjectMapper objectMapper;
@@ -86,6 +86,13 @@ public class TokenServiceImpl implements TokenService {
     @Override
     public void logout(String jwt) {
         String accessToken = jwt.substring(TOKEN_TYPE.length());
+        String[] accessTokens = accessToken.split("\\.");
+        accessToken = accessTokens[0] +
+                "." +
+                accessTokens[1] +
+                "." +
+                accessTokens[2];
+
         Claims claims = tokenUtils.parseClaims(accessToken);
         long exp = claims.getExpiration().getTime();
 
