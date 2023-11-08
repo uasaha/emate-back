@@ -3,6 +3,7 @@ package me.emate.mateback.comment.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.emate.mateback.comment.dto.CommentListResponseDto;
+import me.emate.mateback.comment.dto.CommentMemberRegisterRequestDto;
 import me.emate.mateback.comment.dto.CommentNoMemberRegisterRequestDto;
 import me.emate.mateback.comment.dto.CommentResponseDto;
 import me.emate.mateback.comment.service.CommentService;
@@ -29,6 +30,13 @@ public class CommentController {
         CommentResponseDto responseDto = commentService.noMemberRegisterComment(requestDto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
+    }
+
+    @PostMapping("/member")
+    public ResponseEntity<Void> memberRegisterComment(@RequestBody CommentMemberRegisterRequestDto requestDto) {
+        commentService.memberRegisterComment(requestDto);
+
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @GetMapping("/contents/{contentsNo}")

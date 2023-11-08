@@ -57,8 +57,8 @@ public class Comment {
     @Column(name = "comment_secret")
     private boolean secret;
 
-    @Builder
-    public Comment(Contents contents, Comment mom, String content, String nickname, String pwd, boolean secret) {
+    @Builder(builderMethodName = "noMemberBuilder", builderClassName = "noMemberBuilder")
+    public Comment(Contents contents, Comment mom, String content, String nickname, String pwd) {
         this.contents = contents;
         this.commentMom = mom;
         this.content = content;
@@ -66,6 +66,21 @@ public class Comment {
         this.pwd = pwd;
         this.commentNo = null;
         this.member = null;
+        this.createdAt = LocalDateTime.now();
+        this.modifiedAt = null;
+        this.deleted = false;
+        this.secret = false;
+    }
+
+    @Builder(builderMethodName = "memberBuilder", builderClassName = "memberBuilder")
+    public Comment(Contents contents, Comment mom, String content, Member member, String nickname, boolean secret) {
+        this.contents = contents;
+        this.commentMom = mom;
+        this.content = content;
+        this.member = member;
+        this.nickname = nickname;
+        this.pwd = null;
+        this.commentNo = null;
         this.createdAt = LocalDateTime.now();
         this.modifiedAt = null;
         this.deleted = false;

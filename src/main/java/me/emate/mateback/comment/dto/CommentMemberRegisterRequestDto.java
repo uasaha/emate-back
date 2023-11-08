@@ -4,13 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
-public class CommentNoMemberRegisterRequestDto {
+@NoArgsConstructor
+@AllArgsConstructor
+public class CommentMemberRegisterRequestDto {
     private Integer contentsNo;
+    private Integer memberNo;
     private Long momNo;
-    private String nickName;
-    private String password;
     private String content;
+    private boolean secret;
 }

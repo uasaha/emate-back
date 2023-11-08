@@ -42,4 +42,6 @@ public interface MemberRepository extends JpaRepository<Member, Integer>, Member
      * @return the optional
      */
     Optional<Member> findMemberByMemberId(String memberId);
+
+    Optional<Member> findMemberByMemberNo(Integer memberNo);
 }

@@ -1,6 +1,7 @@
 package me.emate.mateback.comment.service;
 
 import me.emate.mateback.comment.dto.CommentListResponseDto;
+import me.emate.mateback.comment.dto.CommentMemberRegisterRequestDto;
 import me.emate.mateback.comment.dto.CommentNoMemberRegisterRequestDto;
 import me.emate.mateback.comment.dto.CommentResponseDto;
 
@@ -22,4 +23,6 @@ public interface CommentService {
     CommentResponseDto noMemberRegisterComment(CommentNoMemberRegisterRequestDto requestDto);
 
     List<CommentListResponseDto> getCommentByContentsNo(Integer contentsNo);
+
+    void memberRegisterComment(CommentMemberRegisterRequestDto requestDto);
 }
