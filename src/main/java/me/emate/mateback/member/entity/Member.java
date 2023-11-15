@@ -1,14 +1,20 @@
 package me.emate.mateback.member.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import java.util.HashSet;
+import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import me.emate.mateback.authority.entity.AuthorityMember;
-
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Member entity 입니다.
@@ -21,50 +27,51 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Member {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "member_no")
-    private Integer memberNo;
 
-    @Column(name = "nickname")
-    private String nickname;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "member_no")
+  private Integer memberNo;
 
-    @Column(name = "email")
-    private String email;
+  @Column(name = "nickname")
+  private String nickname;
 
-    @Column(name = "member_id")
-    private String memberId;
+  @Column(name = "email")
+  private String email;
 
-    @Column(name = "pwd")
-    private String pwd;
+  @Column(name = "member_id")
+  private String memberId;
 
-    @Column(name = "member_blocked")
-    private boolean isBlocked;
+  @Column(name = "pwd")
+  private String pwd;
 
-    @Column(name = "member_left")
-    private boolean isLeft;
+  @Column(name = "member_blocked")
+  private boolean isBlocked;
 
-    @Column(name = "intro")
-    private String intro;
+  @Column(name = "member_left")
+  private boolean isLeft;
 
-    @OneToMany(mappedBy = "member", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private Set<AuthorityMember> authorities = new HashSet<>();
+  @Column(name = "intro")
+  private String intro;
 
-    /**
-     * Instantiates a new Member.
-     *
-     * @param id       the id
-     * @param pwd      the pwd
-     * @param email    the email
-     * @param nickname the nickname
-     * @param intro    the intro
-     */
-    @Builder
-    public Member(String id, String pwd, String email, String nickname, String intro) {
-        this.memberId = id;
-        this.pwd = pwd;
-        this.email = email;
-        this.nickname = nickname;
-        this.intro = intro;
-    }
+  @OneToMany(mappedBy = "member", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+  private Set<AuthorityMember> authorities = new HashSet<>();
+
+  /**
+   * Instantiates a new Member.
+   *
+   * @param id       the id
+   * @param pwd      the pwd
+   * @param email    the email
+   * @param nickname the nickname
+   * @param intro    the intro
+   */
+  @Builder
+  public Member(String id, String pwd, String email, String nickname, String intro) {
+    this.memberId = id;
+    this.pwd = pwd;
+    this.email = email;
+    this.nickname = nickname;
+    this.intro = intro;
+  }
 }

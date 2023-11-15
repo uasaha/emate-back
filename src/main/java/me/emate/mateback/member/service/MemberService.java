@@ -23,7 +23,7 @@ public interface MemberService {
      * @param requestDto the request dto
      * @return the boolean
      */
-    boolean isIdConflict(CheckIDRequestDto requestDto);
+    boolean isIdConflict(CheckIdRequestDto requestDto);
 
     /**
      * Is nick conflict boolean.

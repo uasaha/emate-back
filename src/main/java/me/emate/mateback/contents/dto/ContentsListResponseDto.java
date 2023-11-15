@@ -1,10 +1,9 @@
 package me.emate.mateback.contents.dto;
 
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDateTime;
 
 /**
  * Contents list response dto입니다.
@@ -15,8 +14,9 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ContentsListResponseDto {
-    private String thumbnail;
-    private String subject;
-    private LocalDateTime createdAt;
-    private int loving;
+
+  private String thumbnail;
+  private String subject;
+  private LocalDateTime createdAt;
+  private int loving;
 }

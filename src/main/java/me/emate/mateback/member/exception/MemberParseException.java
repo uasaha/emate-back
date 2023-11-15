@@ -6,12 +6,13 @@ package me.emate.mateback.member.exception;
  * @author 여운석
  */
 public class MemberParseException extends RuntimeException {
-    private static final String MESSAGE = "멤버 파싱 예외입니다.";
 
-    /**
-     * Instantiates a new Member parse exception.
-     */
-    public MemberParseException() {
-        super(MESSAGE);
-    }
+  private static final String MESSAGE = "멤버 파싱 예외입니다.";
+
+  /**
+   * Instantiates a new Member parse exception.
+   */
+  public MemberParseException() {
+    super(MESSAGE);
+  }
 }

@@ -18,51 +18,52 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @Configuration
 @RequiredArgsConstructor
 public class RedisConfig {
-    @Value("${emate.redis.host}")
-    private String host;
 
-    @Value("${emate.redis.port}")
-    private String port;
+  @Value("${emate.redis.host}")
+  private String host;
 
-    @Value("${emate.redis.password}")
-    private String password;
+  @Value("${emate.redis.port}")
+  private String port;
 
-    /**
-     * Redis connection factory를 빈으로 등록.
-     *
-     * @return the lettuce connection factory
-     */
-    @Bean
-    public LettuceConnectionFactory redisConnectionFactory() {
-        LettuceClientConfiguration clientConfiguration =
-                LettuceClientConfiguration.builder()
-                        .useSsl().build();
+  @Value("${emate.redis.password}")
+  private String password;
 
-        RedisStandaloneConfiguration standaloneConfiguration =
-                new RedisStandaloneConfiguration();
+  /**
+   * Redis connection factory를 빈으로 등록.
+   *
+   * @return the lettuce connection factory
+   */
+  @Bean
+  public LettuceConnectionFactory redisConnectionFactory() {
+    final LettuceClientConfiguration clientConfiguration =
+        LettuceClientConfiguration.builder()
+            .useSsl().build();
 
-        standaloneConfiguration.setHostName(host);
-        standaloneConfiguration.setPort(Integer.parseInt(port));
-        standaloneConfiguration.setPassword(password);
+    RedisStandaloneConfiguration standaloneConfiguration =
+        new RedisStandaloneConfiguration();
 
-        return new LettuceConnectionFactory(standaloneConfiguration, clientConfiguration);
-    }
+    standaloneConfiguration.setHostName(host);
+    standaloneConfiguration.setPort(Integer.parseInt(port));
+    standaloneConfiguration.setPassword(password);
 
-    /**
-     * Redis template을 빈으로 등록.
-     *
-     * @return redis template
-     */
-    @Bean
-    public RedisTemplate<?, ?> redisTemplate() {
-        RedisTemplate<byte[], byte[]> redisTemplate = new RedisTemplate<>();
-        redisTemplate.setConnectionFactory(redisConnectionFactory());
-        redisTemplate.setKeySerializer(new StringRedisSerializer());
-        redisTemplate.setValueSerializer(new StringRedisSerializer());
-        redisTemplate.setHashKeySerializer(new StringRedisSerializer());
-        redisTemplate.setHashValueSerializer(new StringRedisSerializer());
-        redisTemplate.setDefaultSerializer(new StringRedisSerializer());
+    return new LettuceConnectionFactory(standaloneConfiguration, clientConfiguration);
+  }
 
-        return redisTemplate;
-    }
+  /**
+   * Redis template을 빈으로 등록.
+   *
+   * @return redis template
+   */
+  @Bean
+  public RedisTemplate<?, ?> redisTemplate() {
+    RedisTemplate<byte[], byte[]> redisTemplate = new RedisTemplate<>();
+    redisTemplate.setConnectionFactory(redisConnectionFactory());
+    redisTemplate.setKeySerializer(new StringRedisSerializer());
+    redisTemplate.setValueSerializer(new StringRedisSerializer());
+    redisTemplate.setHashKeySerializer(new StringRedisSerializer());
+    redisTemplate.setHashValueSerializer(new StringRedisSerializer());
+    redisTemplate.setDefaultSerializer(new StringRedisSerializer());
+
+    return redisTemplate;
+  }
 }

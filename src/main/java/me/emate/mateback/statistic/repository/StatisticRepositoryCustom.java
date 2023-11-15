@@ -7,10 +7,11 @@ import org.springframework.data.repository.NoRepositoryBean;
  */
 @NoRepositoryBean
 public interface StatisticRepositoryCustom {
-    /**
-     * Gets total visitor.
-     *
-     * @return the total visitor
-     */
-    Integer getTotalVisitor();
+
+  /**
+   * Gets total visitor.
+   *
+   * @return the total visitor
+   */
+  Integer getTotalVisitor();
 }

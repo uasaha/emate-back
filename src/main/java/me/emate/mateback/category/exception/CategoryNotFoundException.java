@@ -6,9 +6,10 @@ package me.emate.mateback.category.exception;
  * @author 여운석
  */
 public class CategoryNotFoundException extends RuntimeException {
-    private final static String MESSAGE = "NOT FOUND CATEGORY";
 
-    public CategoryNotFoundException() {
-        super(MESSAGE);
-    }
+  private static final String MESSAGE = "NOT FOUND CATEGORY";
+
+  public CategoryNotFoundException() {
+    super(MESSAGE);
+  }
 }

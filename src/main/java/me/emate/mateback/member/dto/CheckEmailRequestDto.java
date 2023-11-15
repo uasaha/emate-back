@@ -13,5 +13,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Getter
 public class CheckEmailRequestDto {
-    private String email;
+
+  private String email;
 }

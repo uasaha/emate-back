@@ -5,8 +5,6 @@ import me.emate.mateback.statistic.entity.Statistic;
 import me.emate.mateback.statistic.repository.StatisticRepositoryCustom;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 
-import static com.querydsl.core.group.GroupBy.sum;
-
 /**
  * Statistic repository의 구현체입니다.
  */

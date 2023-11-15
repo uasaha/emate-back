@@ -13,9 +13,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 public class TokenInfoDto {
-    private String sub;
-    private String memberUuid;
-    private String roles;
-    private String iat;
-    private Long exp;
+
+  private String sub;
+  private String memberUuid;
+  private String roles;
+  private String iat;
+  private Long exp;
 }

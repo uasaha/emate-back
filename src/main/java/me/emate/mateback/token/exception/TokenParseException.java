@@ -6,15 +6,16 @@ package me.emate.mateback.token.exception;
  * @author 여운석
  */
 public class TokenParseException extends RuntimeException {
-    /**
-     * The constant MESSAGE.
-     */
-    public static final String MESSAGE = "토큰을 읽어올 수 없습니다";
 
-    /**
-     * Instantiates a new Token parse exception.
-     */
-    public TokenParseException() {
-        super(MESSAGE);
-    }
+  /**
+   * The constant MESSAGE.
+   */
+  public static final String MESSAGE = "토큰을 읽어올 수 없습니다";
+
+  /**
+   * Instantiates a new Token parse exception.
+   */
+  public TokenParseException() {
+    super(MESSAGE);
+  }
 }

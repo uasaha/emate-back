@@ -6,15 +6,16 @@ package me.emate.mateback.token.exception;
  * @author 여운석
  */
 public class TokenUnusualApproachException extends RuntimeException {
-    /**
-     * The constant MESSAGE.
-     */
-    public static final String MESSAGE = "비정상적인 접근 입니다.";
 
-    /**
-     * Instantiates a new Token unusual approach exception.
-     */
-    public TokenUnusualApproachException() {
-        super(MESSAGE);
-    }
+  /**
+   * The constant MESSAGE.
+   */
+  public static final String MESSAGE = "비정상적인 접근 입니다.";
+
+  /**
+   * Instantiates a new Token unusual approach exception.
+   */
+  public TokenUnusualApproachException() {
+    super(MESSAGE);
+  }
 }

@@ -6,17 +6,18 @@ package me.emate.mateback.statistic.service;
  * @author 여운석
  */
 public interface StatisticService {
-    /**
-     * Gets total visitor.
-     *
-     * @return the total visitor
-     */
-    Integer getTotalVisitor();
 
-    /**
-     * Sets today to total.
-     *
-     * @param to the to
-     */
-    void setTodayToTotal(int to);
+  /**
+   * Gets total visitor.
+   *
+   * @return the total visitor
+   */
+  Integer getTotalVisitor();
+
+  /**
+   * Sets today to total.
+   *
+   * @param to the to
+   */
+  void setTodayToTotal(int to);
 }

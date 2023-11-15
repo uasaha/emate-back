@@ -2,8 +2,8 @@ package me.emate.mateback.token.provider;
 
 import me.emate.mateback.member.exception.MemberLoginException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 
 /**
@@ -12,23 +12,24 @@ import org.springframework.security.core.userdetails.User;
  * @author 여운석
  */
 public class CustomAuthenticationProvider extends DaoAuthenticationProvider {
-    @Override
-    public Authentication authenticate(Authentication authentication) {
-        String userId = (String) authentication.getPrincipal();
-        String userPwd = (String) authentication.getCredentials();
 
-        User user
-                = (User) this.getUserDetailsService().loadUserByUsername(userId);
+  @Override
+  public Authentication authenticate(Authentication authentication) {
+    String userId = (String) authentication.getPrincipal();
+    String userPwd = (String) authentication.getCredentials();
 
-        boolean matches = this.getPasswordEncoder().matches(userPwd, user.getPassword());
+    User user
+        = (User) this.getUserDetailsService().loadUserByUsername(userId);
 
-        if (!matches) {
-            throw new MemberLoginException();
-        }
+    boolean matches = this.getPasswordEncoder().matches(userPwd, user.getPassword());
 
-        return new UsernamePasswordAuthenticationToken(
-                user.getUsername(),
-                user.getPassword(),
-                user.getAuthorities());
+    if (!matches) {
+      throw new MemberLoginException();
     }
+
+    return new UsernamePasswordAuthenticationToken(
+        user.getUsername(),
+        user.getPassword(),
+        user.getAuthorities());
+  }
 }

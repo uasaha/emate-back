@@ -6,12 +6,13 @@ package me.emate.mateback.member.exception;
  * @author 여운석
  */
 public class MemberLoginException extends RuntimeException {
-    private static final String MESSAGE = "로그인 예외입니다.";
 
-    /**
-     * Instantiates a new Member login exception.
-     */
-    public MemberLoginException() {
-        super(MESSAGE);
-    }
+  private static final String MESSAGE = "로그인 예외입니다.";
+
+  /**
+   * Instantiates a new Member login exception.
+   */
+  public MemberLoginException() {
+    super(MESSAGE);
+  }
 }

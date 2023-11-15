@@ -53,7 +53,7 @@ public class MemberServiceImpl implements MemberService {
      * {@inheritDoc}
      */
     @Override
-    public boolean isIdConflict(CheckIDRequestDto requestDto) {
+    public boolean isIdConflict(CheckIdRequestDto requestDto) {
         return memberRepository.existsMemberByMemberId(requestDto.getId());
     }
 

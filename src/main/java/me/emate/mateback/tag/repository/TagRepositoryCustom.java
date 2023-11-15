@@ -1,9 +1,8 @@
 package me.emate.mateback.tag.repository;
 
+import java.util.List;
 import me.emate.mateback.tag.dto.TagListResponseDto;
 import org.springframework.data.repository.NoRepositoryBean;
-
-import java.util.List;
 
 /**
  * Querydsl 사용을 위한 custom Tag repository 입니다.
@@ -12,10 +11,11 @@ import java.util.List;
  */
 @NoRepositoryBean
 public interface TagRepositoryCustom {
-    /**
-     * Find all tags list.
-     *
-     * @return the list
-     */
-    List<TagListResponseDto> findAllTags();
+
+  /**
+   * Find all tags list.
+   *
+   * @return the list
+   */
+  List<TagListResponseDto> findAllTags();
 }

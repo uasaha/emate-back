@@ -1,6 +1,8 @@
 package me.emate.mateback.member.repository.impl;
 
 import com.querydsl.core.types.Projections;
+import java.util.List;
+import java.util.Optional;
 import me.emate.mateback.authority.entity.QAuthority;
 import me.emate.mateback.authority.entity.QAuthorityMember;
 import me.emate.mateback.member.dto.MemberDetailResponseDto;
@@ -10,63 +12,62 @@ import me.emate.mateback.member.entity.QMember;
 import me.emate.mateback.member.repository.MemberRepositoryCustom;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 
-import java.util.List;
-import java.util.Optional;
-
 /**
  * Querydsl 사용을 위한 Member repository의 구현체입니다.
  *
  * @author 여운석
  */
-public class MemberRepositoryImpl extends QuerydslRepositorySupport implements MemberRepositoryCustom {
-    public MemberRepositoryImpl() {
-        super(Member.class);
-    }
+public class MemberRepositoryImpl extends QuerydslRepositorySupport implements
+    MemberRepositoryCustom {
 
-    QMember member = QMember.member;
-    QAuthority authority = QAuthority.authority;
-    QAuthorityMember authorityMember = QAuthorityMember.authorityMember;
+  public MemberRepositoryImpl() {
+    super(Member.class);
+  }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public MemberInfoResponseDto memberLogin(String userId) {
-        MemberInfoResponseDto responseDto = from(member)
-                .select(Projections.constructor(
-                        MemberInfoResponseDto.class,
-                        member.memberNo,
-                        member.memberId,
-                        member.pwd))
-                .where(member.memberId.eq(userId))
-                .fetchFirst();
+  QMember member = QMember.member;
+  QAuthority authority = QAuthority.authority;
+  QAuthorityMember authorityMember = QAuthorityMember.authorityMember;
 
-        List<String> memberAuthorities = from(authorityMember)
-                .innerJoin(authorityMember.member, member)
-                .select(authorityMember.authority.authorityName)
-                .where(member.memberId.eq(userId))
-                .fetch();
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public MemberInfoResponseDto memberLogin(String userId) {
+    MemberInfoResponseDto responseDto = from(member)
+        .select(Projections.constructor(
+            MemberInfoResponseDto.class,
+            member.memberNo,
+            member.memberId,
+            member.pwd))
+        .where(member.memberId.eq(userId))
+        .fetchFirst();
 
-        return new MemberInfoResponseDto(responseDto.getMemberNo(),
-                responseDto.getMemberId(),
-                responseDto.getMemberPwd(),
-                memberAuthorities);
-    }
+    List<String> memberAuthorities = from(authorityMember)
+        .innerJoin(authorityMember.member, member)
+        .select(authorityMember.authority.authorityName)
+        .where(member.memberId.eq(userId))
+        .fetch();
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Optional<MemberDetailResponseDto> getMemberDetails(Integer memberNo) {
-        Optional<Member> content = Optional.ofNullable(
-                from(member)
-                        .leftJoin(authorityMember)
-                        .on(member.memberNo.eq(authorityMember.member.memberNo))
-                        .innerJoin(authorityMember.authority, authority)
-                        .where(member.memberNo.eq(memberNo))
-                        .select(member)
-                        .fetchOne());
+    return new MemberInfoResponseDto(responseDto.getMemberNo(),
+        responseDto.getMemberId(),
+        responseDto.getMemberPwd(),
+        memberAuthorities);
+  }
 
-        return content.map(MemberDetailResponseDto::new);
-    }
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Optional<MemberDetailResponseDto> getMemberDetails(Integer memberNo) {
+    Optional<Member> content = Optional.ofNullable(
+        from(member)
+            .leftJoin(authorityMember)
+            .on(member.memberNo.eq(authorityMember.member.memberNo))
+            .innerJoin(authorityMember.authority, authority)
+            .where(member.memberNo.eq(memberNo))
+            .select(member)
+            .fetchOne());
+
+    return content.map(MemberDetailResponseDto::new);
+  }
 }

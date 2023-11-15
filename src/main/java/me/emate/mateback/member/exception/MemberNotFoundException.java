@@ -6,12 +6,13 @@ package me.emate.mateback.member.exception;
  * @author 여운석
  */
 public class MemberNotFoundException extends RuntimeException {
-    private final static String MESSAGE = "멤버를 찾을 수 없습니다.";
 
-    /**
-     * Instantiates a new Member not found exception.
-     */
-    public MemberNotFoundException() {
-        super(MESSAGE);
-    }
+  private static final String MESSAGE = "멤버를 찾을 수 없습니다.";
+
+  /**
+   * Instantiates a new Member not found exception.
+   */
+  public MemberNotFoundException() {
+    super(MESSAGE);
+  }
 }

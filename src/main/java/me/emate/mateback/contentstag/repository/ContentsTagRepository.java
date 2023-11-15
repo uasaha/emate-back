@@ -1,6 +1,6 @@
-package me.emate.mateback.contentsTag.repository;
+package me.emate.mateback.contentstag.repository;
 
-import me.emate.mateback.contentsTag.entity.ContentsTag;
+import me.emate.mateback.contentstag.entity.ContentsTag;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

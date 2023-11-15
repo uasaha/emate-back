@@ -8,5 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  *
  * @author 여운석
  */
-public interface ContentsRepository extends JpaRepository<Contents, Integer>, ContentsRepositoryCustom {
+public interface ContentsRepository extends JpaRepository<Contents, Integer>,
+    ContentsRepositoryCustom {
+
 }

@@ -1,7 +1,7 @@
 package me.emate.mateback.contentstag.dummy;
 
 import me.emate.mateback.contents.dummy.ContentsDummy;
-import me.emate.mateback.contentsTag.entity.ContentsTag;
+import me.emate.mateback.contentstag.entity.ContentsTag;
 import me.emate.mateback.tag.dummy.TagDummy;
 
 public class ContentsTagDummy {

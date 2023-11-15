@@ -20,39 +20,40 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @Slf4j
 @RestControllerAdvice
 public class CustomAdviceController {
-    /**
-     * Not found response entity.
-     *
-     * @return the response entity
-     */
-    @ExceptionHandler({CategoryNotFoundException.class, NotFoundTagException.class,
-            NotFoundContentsException.class, NotFoundTagException.class})
-    public ResponseEntity<Void> notFound() {
-        log.warn("Not founds");
-        return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .build();
-    }
 
-    /**
-     * Unauthorized response entity.
-     *
-     * @return the response entity
-     */
-    @ExceptionHandler({MemberLoginException.class, MemberParseException.class,
-            MemberNotFoundException.class})
-    public ResponseEntity<Void> unauthorized() {
-        log.warn("Unauthorized");
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-    }
+  /**
+   * Not found response entity.
+   *
+   * @return the response entity
+   */
+  @ExceptionHandler({CategoryNotFoundException.class, NotFoundTagException.class,
+      NotFoundContentsException.class, NotFoundTagException.class})
+  public ResponseEntity<Void> notFound() {
+    log.warn("Not founds");
+    return ResponseEntity.status(HttpStatus.NOT_FOUND)
+        .build();
+  }
 
-    /**
-     * Error response entity.
-     *
-     * @return the response entity
-     */
-    @ExceptionHandler(value = Exception.class)
-    public ResponseEntity<Void> error() {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .build();
-    }
+  /**
+   * Unauthorized response entity.
+   *
+   * @return the response entity
+   */
+  @ExceptionHandler({MemberLoginException.class, MemberParseException.class,
+      MemberNotFoundException.class})
+  public ResponseEntity<Void> unauthorized() {
+    log.warn("Unauthorized");
+    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+  }
+
+  /**
+   * Error response entity.
+   *
+   * @return the response entity
+   */
+  @ExceptionHandler(value = Exception.class)
+  public ResponseEntity<Void> error() {
+    return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+        .build();
+  }
 }

@@ -28,88 +28,89 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
-    private static final String LOGIN_REQUEST_MATCHER = "/auth/login";
-    private final CustomUserDetailService userDetailsService;
-    private final ObjectMapper objectMapper;
 
-    /**
-     * Password Encoder를 설정
-     *
-     * @return BcryptPasswordEncoder
-     */
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+  private static final String LOGIN_REQUEST_MATCHER = "/auth/login";
+  private final CustomUserDetailService userDetailsService;
+  private final ObjectMapper objectMapper;
 
-    /**
-     * 필터체인 설정
-     *
-     * @param http the http
-     * @return the security filter chain
-     * @throws Exception the exception
-     */
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        return http.csrf(AbstractHttpConfigurer::disable)
-                .cors(AbstractHttpConfigurer::disable)
-                .formLogin(AbstractHttpConfigurer::disable)
-                .logout(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(registry -> registry.anyRequest().permitAll())
-                .sessionManagement(creationPolicy ->
-                        creationPolicy.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterAt(customAuthenticationFilter(null),
-                        UsernamePasswordAuthenticationFilter.class)
-                .build();
-    }
+  /**
+   * Password Encoder를 설정.
+   *
+   * @return BcryptPasswordEncoder
+   */
+  @Bean
+  public PasswordEncoder passwordEncoder() {
+    return new BCryptPasswordEncoder();
+  }
 
-    /**
-     * authentication manager 빈 등록.
-     *
-     * @param configuration the configuration
-     * @return the authentication manager
-     * @throws Exception the exception
-     */
-    @Bean
-    public AuthenticationManager getAuthenticationManager(
-            AuthenticationConfiguration configuration) throws Exception {
-        return configuration.getAuthenticationManager();
-    }
+  /**
+   * 필터체인 설정.
+   *
+   * @param http the http
+   * @return the security filter chain
+   * @throws Exception the exception
+   */
+  @Bean
+  public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    return http.csrf(AbstractHttpConfigurer::disable)
+        .cors(AbstractHttpConfigurer::disable)
+        .formLogin(AbstractHttpConfigurer::disable)
+        .logout(AbstractHttpConfigurer::disable)
+        .authorizeHttpRequests(registry -> registry.anyRequest().permitAll())
+        .sessionManagement(creationPolicy ->
+            creationPolicy.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+        .addFilterAt(customAuthenticationFilter(null),
+            UsernamePasswordAuthenticationFilter.class)
+        .build();
+  }
 
-    /**
-     * Custom authentication filter 빈 등록.
-     *
-     * @param tokenService the token service
-     * @return the custom authentication filter
-     * @throws Exception the exception
-     */
-    @Bean
-    public CustomAuthenticationFilter customAuthenticationFilter(
-            TokenService tokenService) throws Exception {
-        CustomAuthenticationFilter customAuthenticationFilter =
-                new CustomAuthenticationFilter(customAuthenticationProvider(),
-                        objectMapper,
-                        tokenService);
+  /**
+   * authentication manager 빈 등록.
+   *
+   * @param configuration the configuration
+   * @return the authentication manager
+   * @throws Exception the exception
+   */
+  @Bean
+  public AuthenticationManager getAuthenticationManager(
+      AuthenticationConfiguration configuration) throws Exception {
+    return configuration.getAuthenticationManager();
+  }
 
-        customAuthenticationFilter.setFilterProcessesUrl(LOGIN_REQUEST_MATCHER);
-        customAuthenticationFilter.setAuthenticationManager(getAuthenticationManager(null));
+  /**
+   * Custom authentication filter 빈 등록.
+   *
+   * @param tokenService the token service
+   * @return the custom authentication filter
+   * @throws Exception the exception
+   */
+  @Bean
+  public CustomAuthenticationFilter customAuthenticationFilter(
+      TokenService tokenService) throws Exception {
+    CustomAuthenticationFilter customAuthenticationFilter =
+        new CustomAuthenticationFilter(customAuthenticationProvider(),
+            objectMapper,
+            tokenService);
 
-        return customAuthenticationFilter;
-    }
+    customAuthenticationFilter.setFilterProcessesUrl(LOGIN_REQUEST_MATCHER);
+    customAuthenticationFilter.setAuthenticationManager(getAuthenticationManager(null));
 
-    /**
-     * Custom authentication provider 빈 등록.
-     *
-     * @return the custom authentication provider
-     */
-    @Bean
-    public CustomAuthenticationProvider customAuthenticationProvider() {
-        CustomAuthenticationProvider provider
-                = new CustomAuthenticationProvider();
+    return customAuthenticationFilter;
+  }
 
-        provider.setPasswordEncoder(passwordEncoder());
-        provider.setUserDetailsService(userDetailsService);
+  /**
+   * Custom authentication provider 빈 등록.
+   *
+   * @return the custom authentication provider
+   */
+  @Bean
+  public CustomAuthenticationProvider customAuthenticationProvider() {
+    CustomAuthenticationProvider provider
+        = new CustomAuthenticationProvider();
 
-        return provider;
-    }
+    provider.setPasswordEncoder(passwordEncoder());
+    provider.setUserDetailsService(userDetailsService);
+
+    return provider;
+  }
 }

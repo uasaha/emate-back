@@ -12,5 +12,6 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class MemberNicknameResponseDto {
-    private String nickname;
+
+  private String nickname;
 }
