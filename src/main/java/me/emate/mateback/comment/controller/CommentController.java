@@ -1,17 +1,19 @@
 package me.emate.mateback.comment.controller;
 
-import java.util.List;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import me.emate.mateback.comment.dto.CommentListResponseDto;
 import me.emate.mateback.comment.dto.CommentMemberRegisterRequestDto;
 import me.emate.mateback.comment.dto.CommentNoMemberRegisterRequestDto;
 import me.emate.mateback.comment.dto.CommentResponseDto;
 import me.emate.mateback.comment.service.CommentService;
+import me.emate.mateback.error.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author 여운석
  */
+@Tag(name = "Comment", description = "댓글 API")
 @Slf4j
 @RestController
 @RequiredArgsConstructor
@@ -32,11 +35,16 @@ public class CommentController {
   private final CommentService commentService;
 
   /**
-   * No member register comment response entity.
+   * 비회원의 댓글을 등록합니다.
    *
    * @param requestDto the request dto
    * @return the response entity
    */
+  @Operation(summary = "비회원 댓글 등록", description = "비회원으로 댓글을 등록합니다.")
+  @ApiResponse(responseCode = "201", description = "댓글 등록 성공",
+      content = @Content(schema = @Schema(implementation = CommentResponseDto.class)))
+  @ApiResponse(responseCode = "404", description = "댓글을 시도하는 글 번호가 잘못 됨",
+      content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
   @PostMapping("/anonymous")
   public ResponseEntity<CommentResponseDto> noMemberRegisterComment(
       @RequestBody CommentNoMemberRegisterRequestDto requestDto) {
@@ -51,28 +59,11 @@ public class CommentController {
    * @param requestDto the request dto
    * @return the response entity
    */
-  @PostMapping("/member")
+  @PostMapping("/members")
   public ResponseEntity<Void> memberRegisterComment(
       @RequestBody CommentMemberRegisterRequestDto requestDto) {
     commentService.memberRegisterComment(requestDto);
 
     return ResponseEntity.status(HttpStatus.CREATED).build();
-  }
-
-  /**
-   * Gets comments by contents no.
-   *
-   * @param contentsNo the contents no
-   * @return the comments by contents no
-   */
-  @GetMapping("/contents/{contentsNo}")
-  public ResponseEntity<List<CommentListResponseDto>> getCommentsByContentsNo(
-      @PathVariable Integer contentsNo) {
-    List<CommentListResponseDto> list = commentService.getCommentByContentsNo(contentsNo);
-    StringBuilder sb = new StringBuilder();
-    list.forEach(x -> x.getChildComments()
-        .forEach(y -> sb.append(y.getCreatedAt().toString()).append("\n")));
-    log.info(sb.toString());
-    return ResponseEntity.ok().body(commentService.getCommentByContentsNo(contentsNo));
   }
 }

@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/member")
+@RequestMapping("/members")
 public class MemberController {
 
   private final MemberService memberService;
@@ -64,7 +64,7 @@ public class MemberController {
    * @param requestDto the request dto
    * @return the response entity
    */
-  @PostMapping("/signup/idcheck")
+  @PostMapping("/signup/id")
   public ResponseEntity<Boolean> idConflictCheck(
       @RequestBody CheckIdRequestDto requestDto) {
     return ResponseEntity.ok()
@@ -77,7 +77,7 @@ public class MemberController {
    * @param requestDto the request dto
    * @return the response entity
    */
-  @PostMapping("/signup/nickcheck")
+  @PostMapping("/signup/nickname")
   public ResponseEntity<Boolean> nickConflictCheck(
       @RequestBody CheckNicknameRequestDto requestDto) {
     return ResponseEntity.ok()
@@ -90,7 +90,7 @@ public class MemberController {
    * @param requestDto the request dto
    * @return the response entity
    */
-  @PostMapping("/signup/emailcheck")
+  @PostMapping("/signup/email")
   public ResponseEntity<Boolean> emailConflictCheck(
       @RequestBody CheckEmailRequestDto requestDto) {
     return ResponseEntity.ok()

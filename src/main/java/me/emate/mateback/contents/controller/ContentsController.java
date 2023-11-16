@@ -3,6 +3,8 @@ package me.emate.mateback.contents.controller;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import me.emate.mateback.comment.dto.CommentListResponseDto;
+import me.emate.mateback.comment.service.CommentService;
 import me.emate.mateback.contents.dto.ContentsDetailResponseDto;
 import me.emate.mateback.contents.dto.ContentsListResponseDto;
 import me.emate.mateback.contents.dto.CreateContentsRequestDto;
@@ -32,6 +34,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ContentsController {
 
   private final ContentsService contentsService;
+  private final CommentService commentService;
 
   /**
    * Create contents response entity.
@@ -39,7 +42,7 @@ public class ContentsController {
    * @param requestDto the request dto
    * @return the response entity
    */
-  @PostMapping("/register")
+  @PostMapping
   public ResponseEntity<Void> createContents(
       @RequestBody CreateContentsRequestDto requestDto) {
     log.info(String.valueOf(requestDto.getHidden()));
@@ -79,7 +82,7 @@ public class ContentsController {
    * @param pageable the pageable
    * @return the total contents
    */
-  @GetMapping("/total")
+  @GetMapping("/totals")
   public ResponseEntity<PageableResponse<ContentsListResponseDto>>
         getTotalContents(@PageableDefault(size = 8) Pageable pageable) {
     return ResponseEntity.ok().body(contentsService.getTotalContents(pageable));
@@ -97,5 +100,22 @@ public class ContentsController {
         getContentsContainsSearch(@RequestParam("key") String key,
       @PageableDefault(size = 8) Pageable pageable) {
     return ResponseEntity.ok().body(contentsService.getContentsContainsSearch(key, pageable));
+  }
+
+  /**
+   * Gets comments by contents no.
+   *
+   * @param contentsNo the contents no
+   * @return the comments by contents no
+   */
+  @GetMapping("/{contentsNo}/comments")
+  public ResponseEntity<List<CommentListResponseDto>> getCommentsByContentsNo(
+      @PathVariable Integer contentsNo) {
+    List<CommentListResponseDto> list = commentService.getCommentByContentsNo(contentsNo);
+    StringBuilder sb = new StringBuilder();
+    list.forEach(x -> x.getChildComments()
+        .forEach(y -> sb.append(y.getCreatedAt().toString()).append("\n")));
+    log.info(sb.toString());
+    return ResponseEntity.ok().body(commentService.getCommentByContentsNo(contentsNo));
   }
 }

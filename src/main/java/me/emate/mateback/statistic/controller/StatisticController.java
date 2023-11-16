@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @Slf4j
 @RestController
-@RequestMapping("/visitor")
+@RequestMapping("/visitors")
 public class StatisticController {
 
   private final StatisticService statisticService;
