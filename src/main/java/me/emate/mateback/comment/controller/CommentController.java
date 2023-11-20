@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.emate.mateback.comment.dto.CommentMemberRegisterRequestDto;
@@ -47,7 +48,7 @@ public class CommentController {
       content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
   @PostMapping("/anonymous")
   public ResponseEntity<CommentResponseDto> noMemberRegisterComment(
-      @RequestBody CommentNoMemberRegisterRequestDto requestDto) {
+      @RequestBody @Valid CommentNoMemberRegisterRequestDto requestDto) {
     CommentResponseDto responseDto = commentService.noMemberRegisterComment(requestDto);
 
     return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
@@ -59,9 +60,11 @@ public class CommentController {
    * @param requestDto the request dto
    * @return the response entity
    */
+  @Operation(summary = "회원 댓글 등록", description = "회원으로 댓글을 등록합니다.")
+  @ApiResponse(responseCode = "201", description = "댓글 등록 성공")
   @PostMapping("/members")
   public ResponseEntity<Void> memberRegisterComment(
-      @RequestBody CommentMemberRegisterRequestDto requestDto) {
+      @RequestBody @Valid CommentMemberRegisterRequestDto requestDto) {
     commentService.memberRegisterComment(requestDto);
 
     return ResponseEntity.status(HttpStatus.CREATED).build();

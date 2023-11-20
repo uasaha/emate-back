@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 import me.emate.mateback.tag.dto.TagListResponseDto;
 
 /**
@@ -13,7 +12,6 @@ import me.emate.mateback.tag.dto.TagListResponseDto;
  * @author 여운석
  */
 @Getter
-@ToString
 public class ContentsDetailResponseDto {
 
   private Integer contentsNo;

@@ -17,6 +17,10 @@
 		<java.version>17</java.version>
 		<spring-cloud.version>2022.0.3</spring-cloud.version>
 		<querydsl.version>5.0.0</querydsl.version>
+		<sonar.exclusions>target/generated-sources/**</sonar.exclusions>
+		<sonar.issue.ignore.multicriteria.resourceKey>
+			**/*Dto.java
+		</sonar.issue.ignore.multicriteria.resourceKey>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -186,6 +190,26 @@
 						</exclude>
 					</excludes>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.8.10</version>
+				<executions>
+					<execution>
+						<id>jacoco-initialize</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>jacoco-site</id>
+						<phase>test</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>

@@ -45,8 +45,6 @@ public class ContentsController {
   @PostMapping
   public ResponseEntity<Void> createContents(
       @RequestBody CreateContentsRequestDto requestDto) {
-    log.info(String.valueOf(requestDto.getHidden()));
-
     contentsService.createContents(requestDto);
 
     return ResponseEntity
@@ -93,7 +91,7 @@ public class ContentsController {
    *
    * @param key      the key
    * @param pageable the pageable
-   * @return the contents contains search
+   * @return the contents contain search key
    */
   @GetMapping("/search")
   public ResponseEntity<PageableResponse<ContentsListResponseDto>>
@@ -111,11 +109,6 @@ public class ContentsController {
   @GetMapping("/{contentsNo}/comments")
   public ResponseEntity<List<CommentListResponseDto>> getCommentsByContentsNo(
       @PathVariable Integer contentsNo) {
-    List<CommentListResponseDto> list = commentService.getCommentByContentsNo(contentsNo);
-    StringBuilder sb = new StringBuilder();
-    list.forEach(x -> x.getChildComments()
-        .forEach(y -> sb.append(y.getCreatedAt().toString()).append("\n")));
-    log.info(sb.toString());
     return ResponseEntity.ok().body(commentService.getCommentByContentsNo(contentsNo));
   }
 }

@@ -15,7 +15,7 @@ public class ContentsDummy {
                 MemberDummy.dummy(),
                 "dummy_subject",
                 "dummy_detail",
-                LocalDateTime.of(2023, 11, 1, 10, 30),
+                LocalDateTime.of(2023, 11, 1, 10, 30, 0),
                 false,
                 false,
                 0,
