@@ -13,3 +13,6 @@
 - QueryDsl
 - Maven
 - Docker
+
+
+https://docs.google.com/spreadsheets/d/e/2PACX-1vRP_o7ZgaDZZNuCkmifPLQThkUMcycdX0V6MzPrMJFF2MZwoCPR-1xGiAYByf5oHt5IW5JpqNwOzW24/pubchart?oid=1294703497&format=interactive
